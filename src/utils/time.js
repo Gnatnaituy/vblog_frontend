@@ -5,14 +5,14 @@ export function formatTime(time) {
 
   if (diff < 30) {
     return 'Just now'
-  } else if (diff < 3600) { // less 1 hour
+  } else if (diff < 3600) {
     return Math.ceil(diff / 60) + ' minutes ago'
   } else if (diff < 3600 * 24) {
     return Math.ceil(diff / 3600) + ' hours ago'
   } else if (diff < 3600 * 24 * 2) {
     return 'One day before'
   } else {
-    return Math.ceil(diff / 3600) + ' days before'
+    return Math.ceil(diff / 86400) + ' days before'
   }
 
   return time

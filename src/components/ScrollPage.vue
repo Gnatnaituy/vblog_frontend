@@ -1,7 +1,7 @@
 <template>
-  <div class="infinite-list-wrapper" style="overflow: hidden">
-    <ul class="list" v-infinite-scroll='loadPosts' infinite-scroll-disabled='disabled' infinite-scroll-distance="100px">
-      <li v-for="post in posts">
+  <div class="infinite-list-wrapper" style="overflow: auto">
+    <ul class="list" v-infinite-scroll='loadPosts' infinite-scroll-disabled='disabled'>
+      <li v-for="post in posts" v-bind:key="post.id">
         <post-item :post="post"></post-item>
       </li>
     </ul>

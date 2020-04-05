@@ -4,8 +4,8 @@
     <div style="display: flex; flex-direction: row">
       <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
       <div style="display: flex; flex-direction: column; margin: 5px 0 0 10px">
-        <span>{{ post.poster.nickname }}</span>
-        <span style="font-size: small">{{ formatTime(post.postTime) }}</span>
+        <user-info-card :userInfo="post.poster"></user-info-card>
+        <span style="font-size: small; padding-top: 2px">{{ formatTime(post.postTime) }}</span>
       </div>
     </div>
 
@@ -27,10 +27,15 @@
 <script>
   import axios from 'axios'
   import { formatTime } from '../../utils/time'
+  import UserInfoCard from "../user/UserInfoCard";
 
 
   export default {
     name: 'Post',
+
+    components: {
+      "user-info-card": UserInfoCard
+    },
 
     props: {
       post: Object
