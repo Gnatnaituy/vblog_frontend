@@ -39,6 +39,8 @@
 </template>
 
 <script>
+  import store from '../store'
+
   export default {
     name: 'Header',
 
@@ -54,8 +56,8 @@
 
     computed: {
       user() {
-        let login = this.$store.state.username.length !== 0
-        let avatar = this.$store.state.avatar
+        let login = this.$store.getters.getToken !== null
+        let avatar = this.$store.getters.getToken === null ? null : this.$store.getters.getToken.avatar
         return {
           login, avatar
         }

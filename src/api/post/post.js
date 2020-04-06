@@ -1,11 +1,10 @@
 import request from '@/request'
-import axios from 'axios'
 
 export function savePost(postSaveVo) {
   return request({
     url: '/post/post/save',
     method: 'post',
-    postSaveVo
+    data: postSaveVo
   })
 }
 
@@ -16,8 +15,8 @@ export function deletePost(postId) {
   })
 }
 
-export function listPost(postSearchVo) {
-  return axios.post('/open/post/list', postSearchVo)
+export function apiListPosts(postSearchVo) {
+  return request.post('/open/post/list', postSearchVo)
 }
 
 export function listVoters(postId) {

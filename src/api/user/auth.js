@@ -1,14 +1,11 @@
 import request from '@/request'
 
-export function login(user) {
-  console.log('user.auth --> ' + user.username)
+export default function apiLogin(user) {
+  console.log('user.auth --> ' + user)
   return request({
     url: '/login',
     method: 'post',
-    params: {
-      username: user.username,
-      password: user.password
-    }
+    user
   })
 }
 

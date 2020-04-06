@@ -1,6 +1,6 @@
 <template>
   <div class="infinite-list-wrapper" style="overflow: auto">
-    <ul class="list" v-infinite-scroll='loadPosts' infinite-scroll-disabled='disabled' infinite-scroll-distance="200">
+    <ul class="list" v-infinite-scroll='loadPosts' infinite-scroll-disabled='disabled'>
       <li v-for="post in posts" v-bind:key="post.id">
         <post-item :post="post"></post-item>
       </li>
@@ -20,7 +20,8 @@
 
 <script>
   import Post from "./post/Post";
-  import axios from 'axios';
+  import { apiListPosts } from "../api/post/post";
+  import axios from 'axios'
 
   export default {
     name: "ScrollPage",
@@ -43,6 +44,7 @@
 
     computed: {
       disabled () {
+        console.log(this.loading)
         return this.loading || this.noNewPosts
       }
     },
@@ -52,25 +54,21 @@
         let that = this
         that.loading = true
 
-        setTimeout(() => {
-          axios.post('/open/post/list', {
-            start: that.page.start,
-            size: that.page.size
-          }).then(response => {
-            let newPosts = response.data.data.content
-            if (newPosts && newPosts.length > 0) {
-              that.page.start += 1
-              that.posts = that.posts.concat(newPosts)
-            } else {
-              that.noNewPosts = true
-            }
-          }).catch(error => {
-            if (error !== 'error') {
-              that.$message({type: 'error', message: 'No posts!', showClose: true})
-            }
-          }).finally(() => {
-            that.loading = false
-          }, 2000)
+        axios.post('/open/post/list', that.page).then(response => {
+          const data = response.data.data
+          if (data.content && data.content.length > 0) {
+            that.page.start += 1
+            that.posts = that.posts.concat(data.content)
+          } else {
+            that.noNewPosts = true
+          }
+        }).catch(error => {
+          that.noNewPosts = true
+          if (error !== 'error') {
+            that.$message({type: 'error', message: 'No posts!', showClose: true})
+          }
+        }).finally(() => {
+          that.loading = false
         })
       }
     }

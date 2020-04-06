@@ -1,23 +1,11 @@
-export function getAccessToken() {
-  return localStorage.accessToken
+export function getRedisAccessToken() {
+  return localStorage.redisAccessToken
 }
 
-export function getRefreshToken() {
-  return localStorage.refreshToken
+export function setRedisAccessToken(redisAccessToken) {
+  return localStorage.redisAccessToken = redisAccessToken
 }
 
-export function setAccessToken(accessToken) {
-  return localStorage.accessToken = accessToken
-}
-
-export function setRefreshToken(refreshToken) {
-  return localStorage.refreshToken = refreshToken
-}
-
-export function removeAccessToken() {
-  return localStorage.removeItem('accessToken')
-}
-
-export function removeRefreshToken() {
-  return localStorage.removeItem('refreshToken')
+export function removeRedisAccessToken() {
+  return localStorage.removeItem('redisAccessToken')
 }

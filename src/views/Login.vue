@@ -2,12 +2,12 @@
   <div id="login" v-title data-title="Login - VBLOG">
     <div class="me-login-box me-login-box-radius">
       <h1>VBLOG</h1>
-      <el-form ref="userForm" :model="userForm" :rules="rules">
+      <el-form ref="userForm" :model="user" :rules="rules">
         <el-form-item prop="username">
-          <el-input placeholder="Username" v-model="userForm.username"></el-input>
+          <el-input placeholder="Username" v-model="user.username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input placeholder="Password" type="password" v-model="userForm.password"></el-input>
+          <el-input placeholder="Password" type="password" v-model="user.password"></el-input>
         </el-form-item>
         <el-form-item size="medium" class="me-login-button">
           <el-button type="primary" @click.native.prevent="login('userForm')">Login</el-button>
@@ -18,14 +18,14 @@
 </template>
 
 <script>
-  import { Message } from 'element-ui';
+  import axios from 'axios'
 
   export default {
     name: 'Login',
 
     data() {
       return {
-        userForm: {
+        user: {
           username: '',
           password: ''
         },
@@ -44,19 +44,28 @@
 
     methods: {
       login(formName) {
-        let that = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log('Login.vue --> ' + that.userForm.username)
-            that.$store.dispatch('storeLogin', that.userForm).then(() => {
-              that.$router.go(-1)
-            }).catch((error) => {
-              if (error !== 'error') {
-                Message({ message: error, type: 'error', showClose: true });
+            axios.post('/login', this.user).then(res => {
+              if (res.status === 200) {
+                this.$store.commit('SET_TOKEN', res.data.data)
+                this.$router.push({path:'/'})
+              } else {
+                this.$notify({
+                    title: 'Login notice',
+                    message: 'Wrong username pr password!',
+                    type: 'error'
+                });
               }
+            }).catch(err => {
+              console.log(err)
             })
           } else {
-            return false;
+            this.$notify({
+                title : 'Login notice',
+                message : 'Invalid username pr password!',
+                type : 'error'
+            });
           }
         });
       }
