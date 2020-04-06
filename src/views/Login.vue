@@ -48,7 +48,7 @@
           if (valid) {
             axios.post('/login', this.user).then(res => {
               if (res.status === 200) {
-                this.$store.commit('SET_TOKEN', res.data.data)
+                this.$store.commit('setToken', res.data.data)
                 this.$router.push({path:'/'})
               } else {
                 this.$notify({

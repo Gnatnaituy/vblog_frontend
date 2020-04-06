@@ -56,8 +56,10 @@
 
     computed: {
       user() {
-        let login = this.$store.getters.getToken !== null
-        let avatar = this.$store.getters.getToken === null ? null : this.$store.getters.getToken.avatar
+        console.log('header -> login:', this.$store.getters.login)
+        console.log('header -> token:', this.$store.getters.token)
+        let login = this.$store.getters.login
+        let avatar = login === false ? null : this.$store.getters.token.avatar
         return {
           login, avatar
         }
@@ -68,7 +70,7 @@
       logout() {
         let that = this
         this.$store.dispatch('logout').then(() => {
-          this.$router.push({path: '/'})
+          location.reload()
         }).catch((error) => {
           if (error !== 'error') {
             that.$message({message: error, type: 'error', showClose: true});

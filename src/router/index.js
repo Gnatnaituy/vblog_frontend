@@ -20,14 +20,13 @@ const router = new Router({
       path: '/register',
       component: r => require.ensure([], () => r(require('@/views/Register')), 'register')
     }
-
   ]
 })
 
 router.beforeEach((to, from, next) => {
 
   if (to.meta.requireAuth) {
-    if (store.getters.isLogin) {
+    if (store.getters.login) {
       next()
     } else {
       next({
