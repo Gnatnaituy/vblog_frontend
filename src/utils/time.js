@@ -10,10 +10,8 @@ export function formatTime(time) {
   } else if (diff < 3600 * 24) {
     return Math.ceil(diff / 3600) + ' hours ago'
   } else if (diff < 3600 * 24 * 2) {
-    return 'One day before'
+    return 'one day before'
   } else {
     return Math.ceil(diff / 86400) + ' days before'
   }
-
-  return time
 }

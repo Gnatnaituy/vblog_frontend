@@ -12,7 +12,7 @@
 
 <script>
     export default {
-        name: "UserInfoCard",
+        name: "UserInfo",
 
         props: {
             userInfo: Object
