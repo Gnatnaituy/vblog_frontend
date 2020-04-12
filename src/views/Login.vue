@@ -53,7 +53,7 @@
               } else {
                 this.$notify({
                     title: 'Login notice',
-                    message: 'Wrong username pr password!',
+                    message: 'Wrong username or password!',
                     type: 'error'
                 });
               }
@@ -63,7 +63,7 @@
           } else {
             this.$notify({
                 title : 'Login notice',
-                message : 'Invalid username pr password!',
+                message : 'Invalid username or password!',
                 type : 'error'
             });
           }

@@ -16,7 +16,7 @@
       <!-- Avatar and message -->
       <el-col :span="7">
         <el-menu :router=true menu-trigger="click" mode="horizontal" active-text-color="#5FB878">
-          <template v-if="user.login">
+          <template v-if="user.isLogIn">
             <el-submenu index>
               <template slot="title">
                 <img class="me-header-picture" :src="user.avatar"/>
@@ -39,8 +39,6 @@
 </template>
 
 <script>
-  import store from '../store'
-
   export default {
     name: 'Header',
 
@@ -56,12 +54,10 @@
 
     computed: {
       user() {
-        console.log('header -> login:', this.$store.getters.login)
-        console.log('header -> token:', this.$store.getters.token)
-        let login = this.$store.getters.login
-        let avatar = login === false ? null : this.$store.getters.token.avatar
+        let isLogIn = this.$store.getters.isLogIn
+        let avatar = isLogIn === false ? null : this.$store.getters.token.avatar
         return {
-          login, avatar
+          isLogIn, avatar
         }
       }
     },

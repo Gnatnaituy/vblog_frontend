@@ -19,9 +19,10 @@
 </template>
 
 <script>
-  import Post from "./post/Post";
-  import { apiListPosts } from "../api/post/post";
+  import Post from "./post/Post"
   import axios from 'axios'
+  import state from '../store/state'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: "ScrollPage",
@@ -33,42 +34,40 @@
     data () {
       return {
         loading: false,
-        noNewPosts: false,
-        posts: [],
-        page: {
-          start: 0,
-          size: 10
-        }
+        noNewPosts: false
       }
     },
 
     computed: {
+      posts () {
+        return this.$store.getters.posts
+      },
+      page () {
+        return this.$store.getters.page
+      },
       disabled () {
-        console.log(this.loading)
         return this.loading || this.noNewPosts
       }
     },
 
     methods: {
       loadPosts () {
-        let that = this
-        that.loading = true
+        this.loading = true
 
-        axios.post('/open/post/list', that.page).then(response => {
+        axios.post('/open/post/list', this.page).then(response => {
           const data = response.data.data
           if (data.content && data.content.length > 0) {
-            that.page.start += 1
-            that.posts = that.posts.concat(data.content)
+            this.$store.commit('changePageStart', this.$store.getters.page.start + 1)
+            this.$store.commit('listPosts', data.content)
           } else {
-            that.noNewPosts = true
+            this.noNewPosts = true
           }
         }).catch(error => {
-          that.noNewPosts = true
           if (error !== 'error') {
-            that.$message({type: 'error', message: 'No posts!', showClose: true})
+            this.$message({type: 'error', message: 'No posts!', showClose: true})
           }
         }).finally(() => {
-          that.loading = false
+          this.loading = false
         })
       }
     }

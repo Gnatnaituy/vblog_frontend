@@ -1,67 +1,48 @@
 <template>
-  <el-card style="box-shadow: none">
-    <h1 class="me-author-name">用户名</h1>
-    <div class="me-author-description">
-      <span><i class="el-icon-location-outline"></i>用户地址</span>
-      <span><i class="me-icon-job"></i> &nbsp;用户签名</span>
+  <el-card class="box-card" style="box-shadow: none">
+    <div class="demo-image">
+      <el-image style="width: 100%; height: 200px" :src="userInfo.background"></el-image>
     </div>
-    <div class="me-author-tool">
-      <i @click="showTool(qq)" :title="qq.title" class="me-icon-QQ"></i>
-      <i @click="showTool(github)" :title="github.title" class="me-icon-github"></i>
-    </div>
+    <el-avatar :src="userInfo.avatar"></el-avatar>
+    <div class="text item">{{ userInfo.registerTime }}</div>
+    <div class="text item">{{ userInfo.username }}</div>
+    <div class="text item">{{ userInfo.nickname }}</div>
+    <div class="text item">{{ userInfo.bio }}</div>
   </el-card>
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     name: 'CardMe',
+
     data() {
       return {
-        qq: {
-          title: 'QQ',
-          message: '919431514'},
-        github: {
-          title: 'github',
-          message: '<a target="_blank" href="https://github.com/shimh-develop">https://github.com/shimh-develop</a>'
-        }
+        userInfo: Object
       }
     },
+
+    mounted() {
+      this.user();
+    },
+
     methods: {
-      showTool(tool) {
-        this.$message({
-          duration: 0,
-          showClose: true,
-          dangerouslyUseHTMLString: true,
-          message: '<strong>' + tool.message + '</strong>'
-        });
+      user() {
+        if (this.$store.getters.isLogIn) {
+          axios.get('/user/account/info').then(res => {
+            if (res.status === 200) {
+              this.userInfo = res.data.data
+            }
+          })
+        }
       }
     }
   }
 </script>
 
 <style scoped>
-  .me-author-name {
-    text-align: center;
-    font-size: 30px;
-    border-bottom: 1px solid #5FB878;
-  }
-
-  .me-author-description {
-    padding: 8px 0;
-  }
-
-  .me-icon-job {
-    padding-left: 16px;
-  }
-
-  .me-author-tool {
-    text-align: center;
-    padding-top: 10px;
-  }
-
-  .me-author-tool i {
-    cursor: pointer;
-    padding: 4px 10px;
-    font-size: 30px;
+  .el-card__body {
+    padding: 0
   }
 </style>

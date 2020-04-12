@@ -8,9 +8,12 @@
           <el-col :span="5" :offset="2">
             <card-me style="position: relative"></card-me>
           </el-col>
+
           <el-col :span="10" style="padding: 0 10px 10px 10px">
+            <post-write></post-write>
             <scroll-page></scroll-page>
           </el-col>
+
           <el-col :span="5">
             <card-me></card-me>
           </el-col>
@@ -24,6 +27,7 @@
 import Header from '../components/Header'
 import CardMe from '../components/card/CardMe'
 import ScrollPage from '../components/ScrollPage'
+import PostWrite from '../components/post/PostWrite'
 
 export default {
   name: 'Home',
@@ -32,10 +36,17 @@ export default {
   	return {}
   },
 
+  methods: {
+    refreshPosts() {
+      this.$children[0].loadPosts
+    }
+  },
+
   components: {
   	'component-header': Header,
     'card-me': CardMe,
-    'scroll-page': ScrollPage
+    'scroll-page': ScrollPage,
+    'post-write': PostWrite
   }
 }
 </script>

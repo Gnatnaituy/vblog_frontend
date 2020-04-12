@@ -13,6 +13,15 @@
     <div style="padding: 10px 10px 10px 50px">
       {{ post.content }}
     </div>
+    
+    <!-- Post images -->
+    <div style="padding: 10px 10px 10px 50px;">
+      <el-image v-for="image in post.images" v-bind:key="image.id"
+        :preview-src-list="post.images.map(image => image.url)"
+        style="width: 160px; height: 160px"
+        :src="image.url">
+      </el-image>
+    </div>
 
     <!-- vote and comment button -->
     <div style="padding: 0 10px 10px 50px;">
@@ -33,8 +42,9 @@
     </div>
 
     <!-- comments -->
-    <div  v-if="post.comments.length !== 0" style="margin: 0 10px 0 50px; padding: 5px 0 5px 10px; background-color: #F2F6FC">
-        <comment-item v-for="comment in post.comments" v-bind:key="comment.id" :postId="post.id" :comment="comment"></comment-item>
+    <div class="vblog-comment" v-if="post.comments.length !== 0">
+        <comment-item @returnReply="saveReply" @refreshComments="refreshComments" 
+        v-for="comment in post.comments" v-bind:key="comment.id" :postId="post.id" :comment="comment"></comment-item>
     </div>
   </el-card>
 </template>
@@ -44,7 +54,6 @@
   import { formatTime } from '../../utils/time'
   import UserInfo from "../user/UserInfo";
   import Comment from "./Comment"
-
 
   export default {
     name: 'Post',
@@ -62,7 +71,7 @@
       return {
         comment: {
           postId: this.post.id,
-          content: ''
+          content: '',
         },
         isComment: false
       }
@@ -77,10 +86,30 @@
       showComment() {
         this.isComment = !this.isComment;
       },
-       saveComment() {
-        // axios.post('/post/comment/save', comment)
-        console.log(this.comment)
-        this.isComment = false
+      saveComment() {
+        axios.post('/post/comment/save', this.comment).then(res => {
+          if (res.status === 200) {
+            this.post.comments.unshift(res.data.data)
+            this.comment.content = ''
+          }
+        }).catch(error => {
+          that.noNewPosts = true
+          if (error !== 'error') {
+            that.$message({type: 'error', message: 'Comment failed!', showClose: true})
+          }
+        }).finally(() => {
+          this.isComment = false
+        })
+      },
+      saveReply(reply) {
+        this.post.comments.unshift(reply)
+      },
+      refreshComments() {
+        axios.get(`/open/post/comments/${this.post.id}`).then(res => {
+          if (res.status === 200) {
+            this.$set(this.post, 'comments', res.data.data)
+          }
+        })
       },
       formatTime(time) {
         return formatTime(time)
@@ -90,7 +119,12 @@
 </script>
 
 <style scoped>
-.el-form-item {
-  margin-bottom: 0
-}
+  .el-form-item {
+    margin-bottom: 0;
+  }
+  .vblog-comment {
+    margin: 0 10px 0 50px;
+    padding: 5px 0 5px 10px;
+    background-color: #F2F6FC;
+  }
 </style>

@@ -17,10 +17,8 @@ Vue.directive('title',  function (el, binding) {
   document.title = el.dataset.title
 })
 
-// axios.defaults.baseURL = 'http://127.0.0.1:9005'
 axios.interceptors.request.use(config => {
   if (store.getters.token !== null) {
-    console.log('store.getter.token', store.getters.token)
     config.headers.Authorization = `Bearer ${store.getters.token.accessToken}`;
   }
   return config
