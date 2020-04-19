@@ -10,7 +10,7 @@
           </el-col>
 
           <el-col :span="10" style="padding: 0 10px 10px 10px">
-            <post-write></post-write>
+            <post-write v-if="this.$store.getters.isLogIn"></post-write>
             <scroll-page></scroll-page>
           </el-col>
 

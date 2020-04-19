@@ -6,7 +6,7 @@
     </div>
     <div class="text item" style="padding: 5px 0 0 50px">Gender: {{ userInfo.gender }}</div>
     <div class="text item" style="padding: 5px 0 0 50px">Bio: {{ userInfo.bio }}</div>
-    <el-button type="text" slot="reference" style="padding: 0">{{ userInfo.nickname }}</el-button>
+    <el-button type="text" slot="reference" style="padding: 0">{{ userInfo.username }}</el-button>
   </el-popover>
 </template>
 

@@ -70,6 +70,7 @@ export default {
     formatTime(time) {
       return formatTime(time);
     },
+
     toggleOperation() {
       // User can reply when he logged in
       if (this.$store.getters.isLogIn) {
@@ -80,13 +81,25 @@ export default {
         this.isDeleteBotton = !this.isDeleteBotton;
       }
     },
+
     showReply() {
       this.isReply = !this.isReply;
     },
+
     saveReply() {
       axios.post("/post/comment/save", this.reply).then(res => {
           if (res.status === 200) {
-            this.$emit("returnReply", res.data.data);
+            if (res.data.code === '1') {
+              setTimeout(() => {
+                this.$emit("refreshComments");
+              }, 1000)
+            } else {
+              this.$message({
+                type: "warning",
+                message: res.data.message,
+                showClose: false
+              });
+            }
           }
         }).catch(error => {
           if (error !== "error") {
@@ -100,26 +113,30 @@ export default {
           this.isReply = false;
         });
     },
+    
     deleteComment(commentId) {
       axios.delete(`/post/comment/${commentId}`).then(res => {
-          if (res.status === 200) {
-            if (res.data.code === '1') {
+        if (res.status === 200) {
+          if (res.data.code === '1') {
+            setTimeout(() => {
               this.$emit("refreshComments");
-            } else {
-              this.$message({
-                type: "warning",
-                message: res.data.message,
-                showClose: false
-              });
-            }
+            }, 1000)
+          } else {
+            this.$message({
+              type: "warning",
+              message: res.data.message,
+              showClose: false
+            });
           }
-        }).catch(err => {
-          this.$message({
-            type: "error",
-            message: res.data.message,
-            showClose: false
-          });
-        }).finally(() => {});
+        }
+      }).catch(err => {
+        this.$message({
+          type: "error",
+          message: res.data.message,
+          showClose: false
+        });
+      }).finally(() => {
+      });
     }
   }
 };

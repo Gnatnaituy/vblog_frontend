@@ -26,6 +26,8 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     name: 'Register',
 
@@ -57,15 +59,14 @@
 
     methods: {
       register(formName) {
-        let that = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            that.$store.dispatch('register', that.userForm).then(() => {
-              that.$message({message: 'Register success! Please login', type: 'success', showClose: true});
-              that.$router.push({path: '/'})
+            axios.post('/register', this.userForm).then(() => {
+              this.$message({message: 'Register success! Please login', type: 'success', showClose: true});
+              this.$router.push({path: '/login'})
             }).catch((error) => {
               if (error !== 'error') {
-                that.$message({message: error, type: 'error', showClose: true});
+                this.$message({message: error, type: 'error', showClose: true});
               }
             })
           } else {
