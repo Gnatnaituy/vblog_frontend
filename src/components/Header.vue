@@ -21,15 +21,15 @@
               <template slot="title">
                 <img class="me-header-picture" :src="user.avatar"/>
               </template>
-              <el-menu-item index @click="logout"><i class="el-icon-back"></i>Logout</el-menu-item>
+              <el-menu-item index @click="logout"><i class="el-icon-back"></i>退出登录</el-menu-item>
             </el-submenu>
           </template>
           <template v-else>
             <el-menu-item index="/login">
-              <el-button type="text">Login</el-button>
+              <el-button type="text">登录</el-button>
             </el-menu-item>
             <el-menu-item index="/register">
-              <el-button type="text">Register</el-button>
+              <el-button type="text">注册</el-button>
             </el-menu-item>
           </template>
         </el-menu>

@@ -1,7 +1,7 @@
 <template>
   <el-card style= "margin-bottom: 10px; box-shadow: none">
     <!-- Post content -->
-    <el-input type="textarea" :rows="3" placeholder="Post what you think..." v-model="post.content"></el-input>
+    <el-input type="textarea" :rows="3" placeholder="点击发表动态" v-model="post.content"></el-input>
 
     <!-- Post images preview -->
     <div style="padding: 5px 0 0 0">
@@ -19,11 +19,11 @@
         :action="uploadUrl"
         :on-success="uploadSuccess"
         :on-remove="uploadRemove">
-        <el-button plain round size="mini">Upload</el-button>
+        <el-button plain round size="mini">添加图片</el-button>
       </el-upload>
 
       <!-- Save post -->
-      <el-button plain round size="mini" type="primary" @click="savePost">Post</el-button>
+      <el-button plain round size="mini" type="primary" @click="savePost">发布</el-button>
     </div>
   </el-card>
 </template>

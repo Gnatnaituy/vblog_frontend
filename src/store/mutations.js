@@ -14,7 +14,7 @@ const mutations = {
   },
 
   // Init posts when start project
-  listPosts (state, newPosts) {
+  appendNewPosts (state, newPosts) {
     state.posts = state.posts.concat(newPosts)
   },
   

@@ -2,17 +2,17 @@
   <div class="infinite-list-wrapper" style="overflow: auto">
     <ul class="list" v-infinite-scroll='loadPosts' infinite-scroll-disabled='disabled'>
       <li v-for="post in posts" v-bind:key="post.id">
-        <post-item :post="post"></post-item>
+        <post-item @loadPosts="loadPosts" :post="post"></post-item>
       </li>
     </ul>
     <el-card v-if="loading" style= "margin-bottom: 10px; box-shadow: none; min-height: 40px;">
       <div style="text-align: center; color: gray">
-        Loading......
+        正在加载...
       </div>
     </el-card>
     <el-card v-if="noNewPosts" style= "margin-bottom: 10px; box-shadow: none; min-height: 40px;">
       <div style="text-align: center; color: gray">
-        No new posts......
+        没有更多动态了...
       </div>
     </el-card>
   </div>
@@ -58,7 +58,7 @@
           const data = response.data.data
           if (data.content && data.content.length > 0) {
             this.$store.commit('changePageStart', this.$store.getters.page.start + 1)
-            this.$store.commit('listPosts', data.content)
+            this.$store.commit('appendNewPosts', data.content)
           } else {
             this.noNewPosts = true
           }

@@ -17,7 +17,7 @@
         </el-form-item>
 
         <el-form-item size="medium" class="me-login-button">
-          <el-button type="primary" @click.native.prevent="register('userForm')">Register</el-button>
+          <el-button type="primary" @click.native.prevent="register('userForm')">注册</el-button>
         </el-form-item>
       </el-form>
 

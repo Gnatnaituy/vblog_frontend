@@ -2,11 +2,11 @@
   <el-popover placement="top" width="200" trigger="hover">
     <div style="display: flex; flex-direction: row">
       <el-avatar :src="userInfo.avatar"></el-avatar>
-      <span style="padding: 12px 0 0 10px">{{ userInfo.nickname }}</span>
+      <span style="padding: 12px 0 0 10px">{{ userInfo.username }}</span>
     </div>
-    <div class="text item" style="padding: 5px 0 0 50px">Gender: {{ userInfo.gender }}</div>
-    <div class="text item" style="padding: 5px 0 0 50px">Bio: {{ userInfo.bio }}</div>
-    <el-button type="text" slot="reference" style="padding: 0">{{ userInfo.username }}</el-button>
+    <div class="text item" style="padding: 5px 0 0 50px">性别: {{ userInfo.gender }}</div>
+    <div class="text item" style="padding: 5px 0 0 50px">签名: {{ userInfo.bio }}</div>
+    <el-button type="text" slot="reference" style="padding: 0">{{ userInfo.nickname }}</el-button>
   </el-popover>
 </template>
 

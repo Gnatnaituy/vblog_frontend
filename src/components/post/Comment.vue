@@ -3,23 +3,27 @@
     <div style="display: flex; flex-direction: column" v-on:mouseenter="toggleOperation" v-on:mouseleave="toggleOperation">
       <div style="display: flex; flex-direction: row">
         <user-info :userInfo="comment.commenter"></user-info>
-        <div v-if="comment.commentId !== null" class="text item" style="padding: 0 5px; font-size: 14px; color: #454649">
-          Reply
+        <div v-if="comment.commentId !== null" style="padding: 0 5px; font-size: 14px; color: #454649">
+          回复
         </div>
         <user-info v-if="comment.commentId !== null" :userInfo="comment.commenter"></user-info>
-        <div class="text item" style="padding: 0; font-size: 15px; color: #454649">
+        <div class="text item" style="padding: 0; margin: 0; font-size: 14px; color: #454649">
           : {{ comment.content }}
         </div>
       </div>
       <div style="display: flex; flex-direction: row">
-        <span style="padding: 0; font-size: small; color: #606266;" >
+        <span style="padding: 0; font-size: 12px; color: #606266;" >
           {{ formatTime(comment.commentTime) }}
         </span>
-        <el-button type="text" size="mini" style="padding: 0; align-content: end" v-show="isDeleteBotton === true" @click="deleteComment(comment.id)">
-          Delete
+        <el-button type="text" size="mini" style="padding: 0; align-content: end"
+          v-show="isDeleteBotton === true"
+          @click="deleteComment(comment.id)">
+          删除
         </el-button>
-        <el-button type="text" size="mini" style="padding: 0; align-content: end" v-show="isReplyBotton === true" @click="showReply">
-          Reply
+        <el-button type="text" size="mini" style="padding: 0; align-content: end"
+          v-show="isReplyBotton === true"
+          @click="showReply">
+          回复
         </el-button>
       </div>
     </div>
@@ -30,7 +34,7 @@
         <el-input v-model="reply.content" size="mini"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button plain round size="mini" @click="saveReply">Reply</el-button>
+        <el-button plain round size="mini" @click="saveReply">回复</el-button>
       </el-form-item>
     </el-form>
   </div>
