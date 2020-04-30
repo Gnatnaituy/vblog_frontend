@@ -1,19 +1,25 @@
-let defaultToken = null
-
-try {
-    if (sessionStorage.token) {
-        // if there is token stored in localStorage, get it
-        defaultToken = JSON.parse(sessionStorage.token)
-    }
-} catch (e) {}
-
 const state = {
-    token: defaultToken,
+    // user related data and state
+    token: null,
+    user: null,
+
+    // post related data and state
     posts: [],
-    page: {
+    searchVo: {
+        keyword: '',
+        topic: null,
+        poster: null,
         start: 0,
-        size: 10
-    }
+        size: 2
+    },
+    loading: false,
+    noNewPosts: false,
+
+    // advanced function related data
+    hotWorlds: [],
+    topUsers: [],
+    topToics: [],
+    recommendUsers: []
 }
 
 export default state

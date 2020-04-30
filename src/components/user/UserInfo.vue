@@ -1,5 +1,5 @@
 <template>
-  <el-popover placement="top" width="200" trigger="hover">
+  <el-popover placement="top" width="200" trigger="click">
     <div style="display: flex; flex-direction: row">
       <el-avatar :src="userInfo.avatar"></el-avatar>
       <span style="padding: 12px 0 0 10px">{{ userInfo.username }}</span>

@@ -1,8 +1,9 @@
 <template>
   <div class="infinite-list-wrapper" style="overflow: auto">
-    <ul class="list" v-infinite-scroll='loadPosts' infinite-scroll-disabled='disabled'>
+    <ul class="list" v-infinite-scroll="loadPosts" infinite-scroll-disabled="disabled">
       <li v-for="post in posts" v-bind:key="post.id">
-        <post-item @loadPosts="loadPosts" :post="post"></post-item>
+        <post-item @loadPosts="loadPosts" :post="post">
+        </post-item>
       </li>
     </ul>
     <el-card v-if="loading" style= "margin-bottom: 10px; box-shadow: none; min-height: 40px;">
@@ -21,8 +22,7 @@
 <script>
   import Post from "./post/Post"
   import axios from 'axios'
-  import state from '../store/state'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapState } from 'vuex'
 
   export default {
     name: "ScrollPage",
@@ -31,20 +31,13 @@
       'post-item': Post
     },
 
-    data () {
-      return {
-        loading: false,
-        noNewPosts: false
-      }
-    },
-
     computed: {
-      posts () {
-        return this.$store.getters.posts
-      },
-      page () {
-        return this.$store.getters.page
-      },
+      ...mapState([
+        'loading',
+        'noNewPosts',
+        'searchVo',
+        'posts'
+      ]),
       disabled () {
         return this.loading || this.noNewPosts
       }
@@ -52,23 +45,24 @@
 
     methods: {
       loadPosts () {
-        this.loading = true
+        this.$store.commit('changeLoading', true)
 
-        axios.post('/open/post/list', this.page).then(response => {
-          const data = response.data.data
-          if (data.content && data.content.length > 0) {
-            this.$store.commit('changePageStart', this.$store.getters.page.start + 1)
-            this.$store.commit('appendNewPosts', data.content)
-          } else {
-            this.noNewPosts = true
+        axios.post('/open/post/list', this.searchVo).then(res => {
+          if (res.status === 200 && res.data.code === '1') {
+            const data = res.data.data
+            if (data.content && data.content.length > 0) {
+              this.searchVo.start += 1
+              this.$store.commit('changeSearchVo', this.searchVo)
+              this.$store.commit('appendNewPosts', data.content)
+              console.log("Append posts to state...")
+              if (this.searchVo.start === data.totalPage) {
+                this.$store.commit('changeNoNewPosts', true)
+              }
+            }
           }
-        }).catch(error => {
-          if (error !== 'error') {
-            this.$message({type: 'error', message: 'No posts!', showClose: true})
-          }
-        }).finally(() => {
-          this.loading = false
         })
+        
+        this.$store.commit('changeLoading', false)
       }
     }
   }

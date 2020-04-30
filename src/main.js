@@ -12,14 +12,9 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.config.devtools = true
 
-Object.defineProperty(Vue.prototype, '$_', { value: lodash })
-Vue.directive('title',  function (el, binding) {
-  document.title = el.dataset.title
-})
-
 axios.interceptors.request.use(config => {
-  if (store.getters.token !== null) {
-    config.headers.Authorization = `Bearer ${store.getters.token.accessToken}`;
+  if (store.state.token !== null) {
+    config.headers.Authorization = `Bearer ${store.state.token.accessToken}`;
   }
   return config
 }, err => {

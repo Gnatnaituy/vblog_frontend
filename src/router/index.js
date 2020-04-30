@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../views/Home'
-import store from '../store'
+import PostHome from '../views/PostHome'
+import UserHome from '../views/UserHome'
+import SearchHome from '../views/SearchHome'
 
 Vue.use(Router)
 
@@ -9,8 +10,18 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home,
+      name: 'PostHome',
+      component: PostHome,
+    },
+    {
+      path: '/profile',
+      name: 'UserHome',
+      component: UserHome,
+    },
+    {
+      path: '/search',
+      name: 'SearchHome',
+      component: SearchHome,
     },
     {
       path: '/login',
@@ -25,7 +36,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) {
-    if (store.getters.isLogin) {
+    if (this.$store.getters.isLogin) {
       next()
     } else {
       next({

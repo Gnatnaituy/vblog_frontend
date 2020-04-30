@@ -1,5 +1,4 @@
 const mutations = {
-  // Set token when login
   setToken (state, token) {
     state.token = token
     try {
@@ -7,27 +6,37 @@ const mutations = {
     } catch (e) {}
   },
 
-  // Clear token when logout 
   clearToken (state) {
     localStorage.token = ''
     state.token = null
   },
 
-  // Init posts when start project
+  clearPosts (state) {
+    state.posts = []
+  },
+
   appendNewPosts (state, newPosts) {
     state.posts = state.posts.concat(newPosts)
   },
   
-  // Push a new post
   pushPost (state, newPost) {
     state.posts.unshift(newPost)
   },
 
-  changePageStart (state, start) {
-    state.page.start = start
+  changeSearchVo(state, searchVo) {
+    state.searchVo = searchVo
   },
-  changePageSize (state, size) {
-    state.page.size = size
+
+  changeLoading (state, loading) {
+    state.loading = loading
+  },
+
+  changeNoNewPosts (state, noNewPosts) {
+    state.noNewPosts = noNewPosts
+  },
+
+  initHotWorlds (state, hotWorlds) {
+    state.hotWorlds = hotWorlds
   }
 }
 

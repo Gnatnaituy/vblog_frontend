@@ -15,14 +15,6 @@ const getters = {
 
     token: state => {
         return state.token
-    },
-
-    posts: state => {
-        return state.posts
-    },
-
-    page: state => {
-        return state.page
     }
 }
 

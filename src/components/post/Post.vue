@@ -21,6 +21,7 @@
       <el-image class="vblog_post_images_item"
         v-for="image in post.images"
         v-bind:key="image.id"
+        fit="cover"
         :preview-src-list="post.images.map(image => image.url)"
         :src="image.url">
       </el-image>
@@ -29,15 +30,9 @@
     <!-- vote and comment button -->
     <div class="vblog_post_operation_button" v-if="this.$store.getters.isLogIn">
       <el-row>
-        <el-button plain round size="mini" @click="deletePost">
-          删除
-        </el-button>
-        <el-button plain round size="mini" @click="saveVote">
-          赞
-        </el-button>
-        <el-button plain round size="mini" @click="toggleComment">
-          评论
-        </el-button>
+        <el-button plain round size="mini" @click="deletePost">删除</el-button>
+        <el-button plain round size="mini" @click="saveVote">赞</el-button>
+        <el-button plain round size="mini" @click="toggleComment">评论</el-button>
       </el-row>
       <!-- comment form -->
       <el-form class="vblog_comment_form" v-show="showComment === true"
@@ -46,9 +41,7 @@
           <el-input v-model="comment.content" size="mini"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button plain round size="mini" @click="saveComment">
-            评论
-          </el-button>
+          <el-button plain round size="mini" @click="saveComment">评论</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -200,7 +193,7 @@
   .vblog_post {
     margin-bottom: 10px;
     box-shadow: none;
-    min-height: 200px;
+    min-height: 150px;
   }
 
   .vblog_post_header {
@@ -229,8 +222,8 @@
   }
 
   .vblog_post_images_item {
-    width: 200px;
-    height: 200px;
+    width: 33%;
+    height: 180px;
   }
 
   .vblog_post_operation_button {

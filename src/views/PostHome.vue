@@ -6,7 +6,7 @@
       <el-container style="margin-top: 70px">
         <el-row style="width: 100%">
           <el-col :span="5" :offset="2">
-            <card-me style="position: relative"></card-me>
+            <card-hot-world style="position: relative"></card-hot-world>
           </el-col>
 
           <el-col :span="10" style="padding: 0 10px 10px 10px">
@@ -28,25 +28,17 @@ import Header from '../components/Header'
 import CardMe from '../components/card/CardMe'
 import ScrollPage from '../components/ScrollPage'
 import PostWrite from '../components/post/PostWrite'
+import CardHotWorld from '../components/card/CardHotWorld'
 
 export default {
-  name: 'Home',
-
-  data () {
-  	return {}
-  },
-
-  methods: {
-    refreshPosts() {
-      this.$children[0].loadPosts
-    }
-  },
+  name: 'PostHome',
 
   components: {
   	'component-header': Header,
     'card-me': CardMe,
     'scroll-page': ScrollPage,
-    'post-write': PostWrite
+    'post-write': PostWrite,
+    'card-hot-world': CardHotWorld
   }
 }
 </script>

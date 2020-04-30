@@ -17,7 +17,7 @@
 
 <script>
   export default {
-    name: 'CardTag',
+    name: 'CardTopic',
     props: {
       tags: Array
     },

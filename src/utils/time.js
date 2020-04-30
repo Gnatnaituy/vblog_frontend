@@ -10,7 +10,7 @@ export function formatTime(time) {
   } else if (diff < 3600 * 24) {
     return Math.ceil(diff / 3600) + '小时前'
   } else if (diff < 3600 * 24 * 2) {
-    return 'one day before'
+    return '昨天'
   } else {
     return Math.ceil(diff / 86400) + '天前'
   }
