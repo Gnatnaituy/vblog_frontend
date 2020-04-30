@@ -9,6 +9,9 @@
           {{ formatTime(post.postTime) }}
         </span>
       </div>
+      <i class="el-icon-delete vblog-post-delete" @click="deletePost"
+        v-if="post.poster.id == this.$store.getters.token.userId">
+      </i>
     </div>
 
     <!-- Post content -->
@@ -27,10 +30,17 @@
       </el-image>
     </div>
 
+    <!-- Post topics -->
+    <div class="vblog-post-topics" v-if="post.topics.length > 0">
+      <el-tag size="mini" effect="plain" class="vblog-post-topic-item" 
+        v-for="topic in post.topics" v-bind:key="topic.id">
+        {{ "#" + topic.name }}
+      </el-tag>
+    </div>
+
     <!-- vote and comment button -->
     <div class="vblog_post_operation_button" v-if="this.$store.getters.isLogIn">
       <el-row>
-        <el-button plain round size="mini" @click="deletePost">删除</el-button>
         <el-button plain round size="mini" @click="saveVote">赞</el-button>
         <el-button plain round size="mini" @click="toggleComment">评论</el-button>
       </el-row>
@@ -53,6 +63,9 @@
         :userInfo="voter">
       </user-info>
       觉得很赞
+    </div>
+    <div class="vblog_vote" v-else>
+      <p>&nbsp;</p>
     </div>
 
     <!-- comments -->
@@ -207,6 +220,10 @@
     margin: 5px 0 0 10px;
   }
 
+  .vblog-post-delete {
+    float: right;
+  }
+
   .vblog_post_post_time {
     font-size: small;
     padding-top: 2px;
@@ -214,11 +231,11 @@
   }
 
   .vblog_post_content {
-    padding: 10px 10px 10px 50px;
+    padding: 10px 10px 5px 50px;
   }
 
   .vblog_post_images {
-    padding: 10px 10px 10px 50px;
+    padding: 0 10px 5px 50px;
   }
 
   .vblog_post_images_item {
@@ -226,19 +243,28 @@
     height: 180px;
   }
 
-  .vblog_post_operation_button {
+  .vblog-post-topics {
     padding: 0 10px 10px 50px;
   }
 
+  .vblog-post-topic-item {
+    margin-right: 3px;
+  }
+
+  .vblog_post_operation_button {
+    padding: 0 10px 5px 0;
+    float: right;
+  }
+
   .vblog_vote {
-    margin: 0 10px 5px 50px;
+    margin: 5px 10px 5px 50px;
     padding: 0 0 5px 0;
     font-size: 14px;
     color: #68696b;
   }
 
   .vblog_comment {
-    margin: 0 10px 0 50px;
+    margin: 5px 10px 0 50px;
     padding: 0 0 5px 10px;
     background-color: rgb(249, 252, 255);
   }

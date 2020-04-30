@@ -37,6 +37,10 @@ const mutations = {
 
   initHotWorlds (state, hotWorlds) {
     state.hotWorlds = hotWorlds
+  },
+
+  initHotTopics (state, hotTopics) {
+    state.hotTopics = hotTopics
   }
 }
 

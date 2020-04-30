@@ -6,6 +6,7 @@
       <el-container style="margin-top: 70px">
         <el-row style="width: 100%">
           <el-col :span="5" :offset="2">
+            <card-hot-topic style="position: relative"></card-hot-topic>
             <card-hot-world style="position: relative"></card-hot-world>
           </el-col>
 
@@ -22,6 +23,7 @@
 import Header from "../components/Header";
 import ScrollPage from "../components/ScrollPage";
 import CardHotWorld from '../components/card/CardHotWorld'
+import CardHotTopic from '../components/card/CardHotTopic'
 
 export default {
   name: "SearchHome",
@@ -29,7 +31,8 @@ export default {
   components: {
     "component-header": Header,
     "scroll-page": ScrollPage,
-    "card-hot-world": CardHotWorld
+    "card-hot-world": CardHotWorld,
+    'card-hot-topic': CardHotTopic
   }
 };
 </script>

@@ -1,11 +1,11 @@
 <template>
-  <el-card class="card-hot-world">
+  <el-card class="card-hot-topic">
     <div slot="header" class="">
-      <span>热门词条</span>
+      <span>热门话题</span>
     </div>
-    <div v-for="world in hotWorlds" :key="world.world">
-      <el-tag size="medium" effect="plain" class="hot-world" @click="clickHotWorld(world)">
-        {{ world.world + ' ' + world.count }}
+    <div v-for="topic in hotTopics" :key="topic.topic.id">
+      <el-tag size="medium" effect="plain" class="hot-topic" @click="clickHotTopic(topic)">
+        {{ '#' + topic.topic.name + ' ' + topic.count }}
       </el-tag>
     </div>
   </el-card>
@@ -16,36 +16,36 @@ import axios from 'axios'
 import { mapState } from 'vuex'
 
 export default {
-  name: "CardHotWorld",
+  name: "CardHotTopic",
 
   data() {
     return {
       aggregationVo: {
-        field: "content",
-        size: 30
+        field: "topics",
+        size: 10
       }
     }
   },
 
   computed: {
     ...mapState([
-      "hotWorlds",
+      "hotTopics",
       "searchVo"
     ])
   },
 
   mounted() {
-    axios.post("/open/post/hot-worlds", this.aggregationVo).then(res => {
+    axios.post("/open/post/hot-topics", this.aggregationVo).then(res => {
       if (res.status === 200 && res.data.code === '1') {
-        this.$store.commit('initHotWorlds', res.data.data)
+        this.$store.commit('initHotTopics', res.data.data)
       }
     })
   },
 
   methods: {
-    clickHotWorld(world) {
+    clickHotTopic(topic) {
       this.searchVo.start = 0
-      this.searchVo.keyword = world.world
+      this.searchVo.keyword = topic.topic.name
       this.searchVo.poster = null
       this.$store.commit('changeSearchVo', this.searchVo)
       this.$store.commit('changeNoNewPosts', false)
@@ -59,14 +59,14 @@ export default {
 </script>
 
 <style scoped>
-.card-hot-world {
+.card-hot-topic {
   box-shadow: none;
   margin-bottom: 10px;
 }
-.hot-world-content {
+.hot-topic-content {
   margin-bottom: 20px;
 }
-.hot-world {
+.hot-topic {
   float: left;
   margin: 2px
 }

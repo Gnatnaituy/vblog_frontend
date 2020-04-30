@@ -1,63 +1,71 @@
 <template>
-  <el-card :body-style="{ padding: '8px 18px' }">
-    <div slot="header" class="me-tag-header">
-      <span>最热标签</span>
-      <a @click="moreTags" class="me-pull-right me-tag-more">查看全部</a>
+  <el-card class="card-me">
+    <div class="demo-image">
+      <el-image class="card-me-background" :src="userInfo.background"></el-image>
     </div>
 
-    <ul class="me-tag-list">
-      <li class="me-tag-item" v-for="t in tags" :key="t.id">
-        <!--type="primary"-->
-        <el-button @click="tag(t.id)" size="mini" type="primary" round plain>{{t.tagname}}</el-button>
-      </li>
-    </ul>
-  </el-card>
+    <div class="vblog-me-header">
+      <p>{{ userInfo.username }}</p>
+      <div class="text item">{{ formatTime(userInfo.registerTime) }}注册了VBLOG</div>
+      <el-avatar :src="userInfo.avatar"></el-avatar>
+    </div>
 
+    <div class="text item">{{ userInfo.nickname }}</div>
+    <div class="text item">{{ userInfo.bio }}</div>
+  </el-card>
 </template>
 
 <script>
+  import axios from 'axios'
+  import { formatTime } from "../../utils/time";
+
   export default {
-    name: 'CardTopic',
-    props: {
-      tags: Array
-    },
+    name: 'CardMe',
+
     data() {
-      return {}
+      return {
+        userInfo: Object
+      }
     },
+
+    mounted() {
+      this.user();
+    },
+
     methods: {
-      moreTags() {
-        this.$router.push('/tag/all')
+      formatTime(time) {
+        return formatTime(time);
       },
-      tag(id) {
-        this.$router.push({path: `/tag/${id}`})
+
+      user() {
+        if (this.$store.getters.isLogIn) {
+          axios.get('/user/account/info').then(res => {
+            if (res.status === 200) {
+              this.userInfo = res.data.data
+            }
+          })
+        }
       }
     }
   }
 </script>
 
 <style scoped>
-
-  .me-tag-header {
-    font-weight: 600;
+  .el-card__body {
+    padding: 0
   }
 
-  .me-tag-more {
-    font-size: 14px;
-    color: #78b6f7;
+  .card-me {
+    box-shadow: none;
   }
 
-  .me-tag-list {
-    list-style-type: none;
+  .card-me-background {
+    width: 115%;
+    height: 100%;
+    margin: -20px -20px 0 -20px;
   }
 
-  .me-tag-item {
+  .vblog-me-header {
     display: inline-block;
-    padding: 4px;
-    font-size: 14px;
-    color: #5FB878;
-  }
-
-  .me-tag-item a:hover {
-    text-decoration: underline;
   }
 </style>

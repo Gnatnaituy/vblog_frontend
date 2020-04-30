@@ -15,12 +15,12 @@
         <span style="padding: 0; font-size: 12px; color: #606266;" >
           {{ formatTime(comment.commentTime) }}
         </span>
-        <el-button type="text" size="mini" style="padding: 0; align-content: end"
+        <el-button type="text" size="mini" style="padding: 0; align-items: flex-end"
           v-show="isDeleteBotton === true"
           @click="deleteComment(comment.id)">
           删除
         </el-button>
-        <el-button type="text" size="mini" style="padding: 0; align-content: end"
+        <el-button type="text" size="mini" style="padding: 0; align-items: flex-end"
           v-show="isReplyBotton === true"
           @click="showReply">
           回复

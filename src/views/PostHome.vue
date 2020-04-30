@@ -6,6 +6,7 @@
       <el-container style="margin-top: 70px">
         <el-row style="width: 100%">
           <el-col :span="5" :offset="2">
+            <card-hot-topic style="position: relative"></card-hot-topic>
             <card-hot-world style="position: relative"></card-hot-world>
           </el-col>
 
@@ -29,6 +30,7 @@ import CardMe from '../components/card/CardMe'
 import ScrollPage from '../components/ScrollPage'
 import PostWrite from '../components/post/PostWrite'
 import CardHotWorld from '../components/card/CardHotWorld'
+import CardHotTopic from '../components/card/CardHotTopic'
 
 export default {
   name: 'PostHome',
@@ -38,7 +40,8 @@ export default {
     'card-me': CardMe,
     'scroll-page': ScrollPage,
     'post-write': PostWrite,
-    'card-hot-world': CardHotWorld
+    'card-hot-world': CardHotWorld,
+    'card-hot-topic': CardHotTopic
   }
 }
 </script>

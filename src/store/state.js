@@ -10,15 +10,15 @@ const state = {
         topic: null,
         poster: null,
         start: 0,
-        size: 2
+        size: 20
     },
     loading: false,
     noNewPosts: false,
 
     // advanced function related data
     hotWorlds: [],
-    topUsers: [],
-    topToics: [],
+    hotTopics: [],
+    hotUsers: [],
     recommendUsers: []
 }
 
