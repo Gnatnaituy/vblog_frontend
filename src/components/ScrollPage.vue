@@ -64,6 +64,7 @@
         
         this.$store.commit('changeLoading', false)
       }
-    }
+    },
+    
   }
 </script>
