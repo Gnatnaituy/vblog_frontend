@@ -3,27 +3,38 @@
     <el-row>
       <!-- logo -->
       <el-col :span="7" style="font-size: 24px; margin-top: 8px">
-        <h1>VBLOG</h1>
+        <h1 @click="mainPage()">VBLOG</h1>
       </el-col>
 
       <!-- search pane -->
       <el-col :span="10">
         <el-input v-model="searchVo.keyword" style="margin-top: 10px;">
-          <i slot="suffix" class="el-input__icon el-icon-search" @click="search"></i>
+          <i slot="suffix" class="el-input__icon el-icon-search"
+             @click="postPage(searchVo.keyword)">
+          </i>
         </el-input>
       </el-col>
 
       <!-- Avatar and message -->
       <el-col :span="7">
         <el-menu :router=true menu-trigger="click" mode="horizontal">
-          <template v-if="this.$store.getters.isLogIn">
-            <el-submenu index>
+          <template v-if="this.logged()">
+            <el-submenu index="/">
               <template slot="title">
-                <img class="me-header-picture" :src="this.token.avatar"/>
+                <img class="me-header-picture" alt="avatar" :src="token.avatar" />
               </template>
-              <el-menu-item index="/" @click="post"><i class="el-icon-house"></i>动态首页</el-menu-item>
-              <el-menu-item index="/profile" @click="profile"><i class="el-icon-user"></i>个人主页</el-menu-item>
-              <el-menu-item index="/" @click="logout"><i class="el-icon-switch-button"></i>退出登录</el-menu-item>
+              <el-menu-item index="/" @click="mainPage()">
+                <i class="el-icon-house"></i>
+                动态首页
+              </el-menu-item>
+              <el-menu-item index="/user" @click="userPage(token.userId)">
+                <i class="el-icon-user"></i>
+                个人主页
+              </el-menu-item>
+              <el-menu-item index="/" v-on:click="clearToken()">
+                <i class="el-icon-switch-button"></i>
+                退出登录
+              </el-menu-item>
             </el-submenu>
           </template>
           <template v-else>
@@ -41,57 +52,41 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import { mapGetters, mapState } from 'vuex'
+  import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
   export default {
     name: 'Header',
 
+    data() {
+      return {}
+    },
+
     computed: {
-      ...mapState([
-        'searchVo',
-        'token'
-      ])
+      ...mapState(['searchVo', 'token'])
     },
 
     methods: {
-      post() {
-        this.searchVo.start = 0
-        this.searchVo.keyword = ''
-        this.searchVo.poster = null
-        this.$store.commit('changeSearchVo', this.searchVo)
-        this.$store.commit('changeNoNewPosts', false)
-        this.$store.commit('clearPosts')
+      ...mapGetters(['logged']),
+      ...mapMutations(['clearToken']),
+      ...mapActions(['main', 'post', 'user']),
+
+      mainPage() {
+        this.main()
         if (this.$route.path !== '/') {
-          this.$router.push({path:'/'})
+          this.$router.push({path: '/'})
         }
       },
-
-      search() {
-        this.searchVo.start = 0
-        this.searchVo.poster = null
-        this.$store.commit('changeSearchVo', this.searchVo)
-        this.$store.commit('changeNoNewPosts', false)
-        this.$store.commit('clearPosts')
-        if (this.$route.path !== '/search') {
-          this.$router.push({path:'/search'})
+      postPage(keyword) {
+        this.post(keyword)
+        if (this.$route.path !== '/post') {
+          this.$router.push({path: '/post'})
         }
       },
-
-      profile() {
-        this.searchVo.start = 0
-        this.searchVo.keyword = ''
-        this.searchVo.poster = this.token.userId
-        this.$store.commit('changeSearchVo', this.searchVo)
-        this.$store.commit('changeNoNewPosts', false)
-        this.$store.commit('clearPosts')
-        if (this.$route.path !== '/profile') {
-          this.$router.push({path:'/profile'})
+      userPage(userId) {
+        this.user(userId)
+        if (this.$route.path !== '/user') {
+          this.$router.push({path: '/user'})
         }
-      },
-
-      logout() {
-        this.$store.commit('clearToken')
       }
     }
   }

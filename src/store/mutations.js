@@ -1,50 +1,73 @@
 const mutations = {
+  // token
   setToken (state, token) {
     state.token = token
-    try {
-      localStorage.token = JSON.stringify(token)
-    } catch (e) {}
+    localStorage.token = JSON.stringify(token)
   },
-
   clearToken (state) {
     localStorage.token = ''
-    state.token = null
+    state.token = {
+      userId: null,
+      username: null,
+      accessToken: null,
+      avatar: null,
+      background: null,
+      bio: null,
+      expiresIn: null,
+      expiresTime: null,
+      jti: null,
+      nickname: null,
+      refreshToken: null,
+      roles: [],
+      scope: null,
+      tokenType: null
+    }
   },
 
-  clearPosts (state) {
-    state.posts = []
-  },
-
-  appendNewPosts (state, newPosts) {
-    state.posts = state.posts.concat(newPosts)
-  },
-  
-  pushPost (state, newPost) {
-    state.posts.unshift(newPost)
-  },
-
+  // searchVo
   changeSearchVo(state, searchVo) {
     state.searchVo = searchVo
   },
 
+  // posts
+  clearPosts (state) {
+    state.posts = []
+  },
+  appendNewPosts (state, newPosts) {
+    state.posts = state.posts.concat(newPosts)
+  },
+  pushPost (state, newPost) {
+    state.posts.unshift(newPost)
+  },
   changeLoading (state, loading) {
     state.loading = loading
   },
-
   changeNoNewPosts (state, noNewPosts) {
     state.noNewPosts = noNewPosts
   },
 
-  initHotWorlds (state, hotWorlds) {
-    state.hotWorlds = hotWorlds
+  // word
+  initHotWords (state, words) {
+    state.hotWords = words
   },
 
-  initHotTopics (state, hotTopics) {
-    state.hotTopics = hotTopics
+  // topic
+  initHotTopics (state, topics) {
+    state.hotTopics = topics
+  },
+  changeCurrentTopic (state, topic) {
+    state.currentTopic = topic
   },
 
-  initHotUsers (state, hotUsers) {
-    state.hotUsers = hotUsers
+  // user
+  initHotUsers (state, users) {
+    state.hotUsers = users
+  },
+  initRecommendUsers (state, users) {
+    state.recommendUsers = users
+  },
+  changeCurrentUser (state, user) {
+    state.currentUser = user
   }
 }
 

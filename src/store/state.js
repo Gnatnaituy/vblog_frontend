@@ -1,25 +1,62 @@
 const state = {
-    // user related data and state
-    token: null,
-    user: null,
+    token: {
+        userId: null,
+        username: null,
+        accessToken: null,
+        avatar: null,
+        background: null,
+        bio: null,
+        expiresIn: null,
+        expiresTime: null,
+        jti: null,
+        nickname: null,
+        refreshToken: null,
+        roles: [],
+        scope: null,
+        tokenType: null
+    },
 
-    // post related data and state
-    posts: [],
     searchVo: {
-        keyword: '',
+        keyword: null,
         topic: null,
         poster: null,
         start: 0,
         size: 20
     },
+    posts: [],
     loading: false,
     noNewPosts: false,
 
-    // advanced function related data
-    hotWorlds: [],
+    hotWords: [],
+
     hotTopics: [],
+    currentTopic: {
+        id: null,
+        name: null,
+        description: null,
+        createUser: null,
+        createTime: null
+    },
+
     hotUsers: [],
-    recommendUsers: []
+    recommendUsers: [],
+    currentUser: {
+        id: null,
+        username: null,
+        age: null,
+        avatar: null,
+        background: null,
+        bio: null,
+        blocks: [],
+        city: null,
+        country: null,
+        email: null,
+        gender: null,
+        nickname: null,
+        phone: null,
+        province: null,
+        registerTime: null
+    }
 }
 
 export default state

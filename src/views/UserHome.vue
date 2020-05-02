@@ -7,12 +7,16 @@
       <el-container style="margin-top: 70px">
         <el-row style="width: 100%">
           <el-col :span="5" :offset="2">
-            <card-me style="position: relative"></card-me>
+            <card-hot-user style="position: relative"></card-hot-user>
           </el-col>
 
           <el-col :span="10" style="padding: 0 10px 10px 10px">
             <div class="text item vblog-post-me">我的动态</div>
             <scroll-page></scroll-page>
+          </el-col>
+
+          <el-col :span="5">
+            <card-user></card-user>
           </el-col>
         </el-row>
       </el-container>
@@ -21,27 +25,30 @@
 </template>
 
 <script>
-import Header from "../components/Header";
-import CardMe from "../components/card/CardMe";
-import ScrollPage from "../components/ScrollPage";
+import Header from "../components/Header"
+import CardUser from "../components/user/CardUser"
+import ScrollPage from "../components/ScrollPage"
+import CardHotUser from "../components/user/CardHotUser"
+import { mapState } from "vuex"
 
 export default {
   name: "UserHome",
+
+  components: {
+    "component-header": Header,
+    "card-user": CardUser,
+    "scroll-page": ScrollPage,
+    "card-hot-user": CardHotUser
+  },
 
   data() {
     return {};
   },
 
-  methods: {
-    refreshPosts() {
-      this.$children[0].loadPosts;
-    }
-  },
-
-  components: {
-    "component-header": Header,
-    "card-me": CardMe,
-    "scroll-page": ScrollPage
+  computed: {
+    ...mapState([
+      "token"
+    ])
   }
 };
 </script>

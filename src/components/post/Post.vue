@@ -4,21 +4,23 @@
     <div class = "vblog_post_header">
       <el-avatar :src="post.poster.avatar"></el-avatar>
       <div class="vblog_post_header_content">
-        <user-info :userInfo="post.poster"></user-info>
+        <el-link type="primary" :underline=false v-on:click="userPage(post.poster.id)">
+          {{ post.poster.nickname }}
+        </el-link>
         <span class="vblog_post_post_time">
           {{ formatTime(post.postTime) }}
         </span>
       </div>
       <i class="el-icon-delete vblog-post-delete" @click="deletePost"
-        v-if="post.poster.id == this.$store.getters.token.userId">
+        v-if="token !== null && post.poster.id == token.userId">
       </i>
     </div>
 
     <!-- Post content -->
     <div class="vblog_post_content">
-      {{ post.content }}
+      <p v-html="post.content">{{ post.content }}</p>
     </div>
-    
+
     <!-- Post images -->
     <div class="vblog_post_images" v-if="post.images.length !== 0">
       <el-image class="vblog_post_images_item"
@@ -32,21 +34,36 @@
 
     <!-- Post topics -->
     <div class="vblog-post-topics" v-if="post.topics.length > 0">
-      <el-tag size="mini" effect="plain" class="vblog-post-topic-item" 
+      <el-tag size="mini" effect="plain" class="vblog-post-topic-item"
         v-for="topic in post.topics" v-bind:key="topic.id">
         {{ "#" + topic.name }}
       </el-tag>
     </div>
 
     <!-- vote and comment button -->
-    <div class="vblog_post_operation_button" v-if="this.$store.getters.isLogIn">
+    <div class="vblog_post_operation_button" v-if="this.$store.getters.logged">
       <el-row>
-        <el-button plain round size="mini" @click="saveVote">赞</el-button>
-        <el-button plain round size="mini" @click="toggleComment">评论</el-button>
+        <el-button plain round size="mini" @click="saveVote()">赞</el-button>
+        <el-button plain round size="mini" @click="toggleComment()">评论</el-button>
       </el-row>
-      <!-- comment form -->
-      <el-form class="vblog_comment_form" v-show="showComment === true"
-        :inline="true" :model="comment">
+    </div>
+
+    <!-- votes -->
+    <div class="vblog_vote" v-if="post.voters.length !== 0">
+      <el-link type="primary" :underline=false
+               v-for="voter in post.voters"
+               v-bind:key="voter.id"
+               v-on:click="userPage(voter.id)">
+        {{ voter.nickname }}
+      </el-link>
+      觉得很赞
+    </div>
+    <div class="vblog_vote" v-else>
+      <p>&nbsp;</p>
+    </div>
+
+    <!-- comment form -->
+      <el-form class="vblog_comment_form" v-show="showComment === true" :inline="true" :model="comment">
         <el-form-item>
           <el-input v-model="comment.content" size="mini"></el-input>
         </el-form-item>
@@ -54,23 +71,10 @@
           <el-button plain round size="mini" @click="saveComment">评论</el-button>
         </el-form-item>
       </el-form>
-    </div>
-
-    <!-- votes -->
-    <div class="vblog_vote" v-if="post.voters.length !== 0">
-      <user-info v-for="voter in post.voters" 
-        v-bind:key="voter.id"
-        :userInfo="voter">
-      </user-info>
-      觉得很赞
-    </div>
-    <div class="vblog_vote" v-else>
-      <p>&nbsp;</p>
-    </div>
 
     <!-- comments -->
     <div class="vblog_comment" v-if="post.comments.length !== 0">
-        <comment-item @refreshComments="refreshComments" 
+        <comment-item @refreshComments="refreshComments"
           v-for="comment in post.comments"
           v-bind:key="comment.id"
           :postId="post.id"
@@ -83,19 +87,32 @@
 <script>
   import axios from 'axios'
   import { formatTime } from '../../utils/time'
-  import UserInfo from "../user/UserInfo";
-  import Comment from "./Comment"
+  import Comment from './Comment'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
     name: 'Post',
 
     components: {
-      "user-info": UserInfo,
-      "comment-item": Comment
+      'comment-item': Comment
     },
 
     props: {
-      post: Object
+      post: {
+        comments: [],
+        content: null,
+        id: null,
+        images: [],
+        postTime: null,
+        poster: null,
+        topics: [],
+        voteByMe: null,
+        voters: []
+      }
+    },
+
+    computed: {
+      ...mapState(['token'])
     },
 
     data() {
@@ -104,17 +121,30 @@
           postId: this.post.id,
           disvote: this.post.voteByMe
         },
-           
+
         comment: {
           postId: this.post.id,
           content: '',
         },
-        
+
         showComment: false
       }
     },
 
     methods: {
+      ...mapActions(['topic', 'user']),
+      topicPage(topicId) {
+        this.topic(topicId)
+        if (this.$route.path !== '/topic') {
+          this.$router.push({path: '/topic'})
+        }
+      },
+      userPage(userId) {
+        this.user(userId)
+        if (this.$route.path !== '/user') {
+          this.$router.push({path: '/user'})
+        }
+      },
       // Delete post
       deletePost() {
         axios.delete(`/post/${this.post.id}`).then(res => {
@@ -133,7 +163,7 @@
       },
 
       // Save vote and refresh voters of this post after 1s
-      saveVote(postId) {
+      saveVote() {
         axios.post('/post/vote/vote', this.vote).then(res => {
           if (res.status === 200 && res.data.code === '1') {
             this.post.voteByMe = !this.post.voteByMe
@@ -270,6 +300,7 @@
   }
 
   .vblog_comment_form {
-    margin: 0
+    margin: 0 0 0 50px;
+    width: 90%;
   }
 </style>

@@ -11,18 +11,17 @@
           <el-col :span="5" :offset="2">
             <card-hot-user style="position: relative"></card-hot-user>
             <card-hot-topic style="position: relative"></card-hot-topic>
-            <card-hot-world style="position: relative"></card-hot-world>
+            <card-hot-word style="position: relative"></card-hot-word>
           </el-col>
 
           <!-- post write & content board -->
           <el-col :span="10" style="padding: 0 10px 10px 10px">
-            <post-write v-if="this.$store.getters.isLogIn"></post-write>
+            <post-write v-if="this.logged()"></post-write>
             <scroll-page></scroll-page>
           </el-col>
 
           <!-- current user info & user recommends -->
           <el-col :span="5">
-            <card-me></card-me>
           </el-col>
         </el-row>
       </el-container>
@@ -32,24 +31,27 @@
 
 <script>
 import Header from '../components/Header'
-import CardMe from '../components/card/CardMe'
 import ScrollPage from '../components/ScrollPage'
 import PostWrite from '../components/post/PostWrite'
-import CardHotWorld from '../components/card/CardHotWorld'
-import CardHotTopic from '../components/card/CardHotTopic'
-import CardHotUser from '../components/card/CardHotUser'
+import CardHotWord from '../components/post/CardHotWord'
+import CardHotTopic from '../components/post/CardHotTopic'
+import CardHotUser from '../components/user/CardHotUser'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'PostHome',
 
   components: {
   	'component-header': Header,
-    'card-me': CardMe,
     'scroll-page': ScrollPage,
     'post-write': PostWrite,
-    'card-hot-world': CardHotWorld,
+    'card-hot-word': CardHotWord,
     'card-hot-topic': CardHotTopic,
     'card-hot-user': CardHotUser
+  },
+
+  methods: {
+    ...mapGetters(['logged'])
   }
 }
 </script>

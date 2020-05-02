@@ -4,7 +4,7 @@
       <span>活跃用户</span>
     </div>
     <div v-for="user in hotUsers" :key="user.user.id">
-      <el-tag size="medium" effect="plain" class="hot-user" @click="clickHotUser(user)">
+      <el-tag size="medium" effect="plain" class="hot-user" @click="userPage(user.user.id)">
         {{ user.user.nickname + ' ' + user.count }}
       </el-tag>
     </div>
@@ -13,7 +13,7 @@
 
 <script>
 import axios from 'axios'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: "CardHotUser",
@@ -28,8 +28,7 @@ export default {
 
   computed: {
     ...mapState([
-      "hotUsers",
-      "searchVo"
+      "hotUsers"
     ])
   },
 
@@ -42,15 +41,12 @@ export default {
   },
 
   methods: {
-    clickHotUser(user) {
-      this.searchVo.start = 0
-      this.searchVo.keyword = ''
-      this.searchVo.poster = user.user.id
-      this.$store.commit('changeSearchVo', this.searchVo)
-      this.$store.commit('changeNoNewPosts', false)
-      this.$store.commit('clearPosts')
-      if (this.$route.path !== '/search') {
-        this.$router.push({path:'/search'})
+    ...mapActions(['user']),
+
+    userPage(userId) {
+      this.user(userId)
+      if (this.$route.path !== '/user') {
+        this.$router.push({path: '/user'})
       }
     }
   }

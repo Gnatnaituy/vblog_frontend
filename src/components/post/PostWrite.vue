@@ -37,7 +37,7 @@
     data() {
       return {
         header: {
-          Authorization: "Bearer " + this.$store.getters.token.accessToken
+          Authorization: "Bearer " + this.$store.state.token.accessToken
         },
         uploadUrl: "/upload/image",
         post: {

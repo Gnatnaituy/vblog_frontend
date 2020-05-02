@@ -2,11 +2,15 @@
   <div class="text item" style="padding: 10px 0 0 0">
     <div style="display: flex; flex-direction: column" v-on:mouseenter="toggleOperation" v-on:mouseleave="toggleOperation">
       <div style="display: flex; flex-direction: row">
-        <user-info :userInfo="comment.commenter"></user-info>
+        <el-link type="primary" :underline=false v-on:click="userPage(comment.commenter.id)">
+          {{ comment.commenter.nickname }}
+        </el-link>
         <div v-if="comment.commentId !== null" style="padding: 0 5px; font-size: 14px; color: #454649">
           回复
         </div>
-        <user-info v-if="comment.commentId !== null" :userInfo="comment.commenter"></user-info>
+        <el-link type="primary" :underline=false v-if="comment.commentId !== null" v-on:click="userPage(comment.commenter.id)">
+          {{ comment.commenter.nickname }}
+        </el-link>
         <div class="text item" style="padding: 0; margin: 0; font-size: 14px; color: #454649">
           : {{ comment.content }}
         </div>
@@ -16,12 +20,12 @@
           {{ formatTime(comment.commentTime) }}
         </span>
         <el-button type="text" size="mini" style="padding: 0; align-items: flex-end"
-          v-show="isDeleteBotton === true"
+          v-show="isDeleteButton === true"
           @click="deleteComment(comment.id)">
           删除
         </el-button>
         <el-button type="text" size="mini" style="padding: 0; align-items: flex-end"
-          v-show="isReplyBotton === true"
+          v-show="isReplyButton === true"
           @click="showReply">
           回复
         </el-button>
@@ -41,20 +45,24 @@
 </template>
 
 <script>
-import { formatTime } from "../../utils/time";
-import UserInfo from "../user/UserInfo";
-import axios from "axios";
+import { formatTime } from '../../utils/time'
+import axios from 'axios'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: "Comment",
-
-  components: {
-    "user-info": UserInfo
-  },
+  name: 'Comment',
 
   props: {
     postId: null,
-    comment: Object
+    comment: {
+      id: null,
+      postId: null,
+      commentId: null,
+      content: null,
+      originCommenter: null,
+      commenter: null,
+      commentTime: null
+    }
   },
 
   data() {
@@ -64,25 +72,37 @@ export default {
         commentId: this.comment.id,
         content: ""
       },
-      isReplyBotton: false,
-      isDeleteBotton: false,
+      isReplyButton: false,
+      isDeleteButton: false,
       isReply: false
     };
   },
 
+  computed: {
+    ...mapState(['token'])
+  },
+
   methods: {
+    ...mapActions(['user']),
+    userPage(userId) {
+      this.user(userId)
+      if (this.$route.path !== '/user') {
+        this.$router.push({path: '/user'})
+      }
+    },
+
     formatTime(time) {
       return formatTime(time);
     },
 
     toggleOperation() {
       // User can reply when he logged in
-      if (this.$store.getters.isLogIn) {
-        this.isReplyBotton = !this.isReplyBotton;
+      if (this.$store.getters.logged) {
+        this.isReplyButton = !this.isReplyButton;
       }
       // User can delete the comment only when he logged in and is the commenter
-      if (this.$store.getters.isLogIn === true && this.$store.getters.token.userId === this.comment.commenter.id) {
-        this.isDeleteBotton = !this.isDeleteBotton;
+      if (this.$store.getters.logged === true && this.token.userId === this.comment.commenter.id) {
+        this.isDeleteButton = !this.isDeleteButton;
       }
     },
 
@@ -91,56 +111,41 @@ export default {
     },
 
     saveReply() {
-      axios.post("/post/comment/save", this.reply).then(res => {
+      axios.post('/post/comment/save', this.reply).then(res => {
           if (res.status === 200) {
             if (res.data.code === '1') {
               setTimeout(() => {
-                this.$emit("refreshComments");
+                this.$emit('refreshComments');
               }, 1000)
             } else {
               this.$message({
-                type: "warning",
+                type: 'warning',
                 message: res.data.message,
                 showClose: false
               });
             }
           }
-        }).catch(error => {
-          if (error !== "error") {
-            that.$message({
-              type: "error",
-              message: "No posts!",
-              showClose: true
-            });
-          }
         }).finally(() => {
           this.isReply = false;
         });
     },
-    
+
     deleteComment(commentId) {
       axios.delete(`/post/comment/${commentId}`).then(res => {
         if (res.status === 200) {
           if (res.data.code === '1') {
             setTimeout(() => {
-              this.$emit("refreshComments");
+              this.$emit('refreshComments');
             }, 1000)
           } else {
             this.$message({
-              type: "warning",
+              type: 'warning',
               message: res.data.message,
               showClose: false
             });
           }
         }
-      }).catch(err => {
-        this.$message({
-          type: "error",
-          message: res.data.message,
-          showClose: false
-        });
-      }).finally(() => {
-      });
+      })
     }
   }
 };

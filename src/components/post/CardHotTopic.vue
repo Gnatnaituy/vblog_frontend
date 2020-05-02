@@ -4,7 +4,7 @@
       <span>热门话题</span>
     </div>
     <div v-for="topic in hotTopics" :key="topic.topic.id">
-      <el-tag size="medium" effect="plain" class="hot-topic" @click="clickHotTopic(topic)">
+      <el-tag size="medium" effect="plain" class="hot-topic" @click="topicPage(topic.topic.id)">
         {{ '#' + topic.topic.name + ' ' + topic.count }}
       </el-tag>
     </div>
@@ -13,29 +13,26 @@
 
 <script>
 import axios from 'axios'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: "CardHotTopic",
+  name: 'CardHotTopic',
 
   data() {
     return {
       aggregationVo: {
-        field: "topics",
+        field: 'topics',
         size: 10
       }
     }
   },
 
   computed: {
-    ...mapState([
-      "hotTopics",
-      "searchVo"
-    ])
+    ...mapState(['hotTopics'])
   },
 
   mounted() {
-    axios.post("/open/post/hot-topics", this.aggregationVo).then(res => {
+    axios.post('/open/post/hot-topics', this.aggregationVo).then(res => {
       if (res.status === 200 && res.data.code === '1') {
         this.$store.commit('initHotTopics', res.data.data)
       }
@@ -43,15 +40,12 @@ export default {
   },
 
   methods: {
-    clickHotTopic(topic) {
-      this.searchVo.start = 0
-      this.searchVo.keyword = topic.topic.name
-      this.searchVo.poster = null
-      this.$store.commit('changeSearchVo', this.searchVo)
-      this.$store.commit('changeNoNewPosts', false)
-      this.$store.commit('clearPosts')
-      if (this.$route.path !== '/search') {
-        this.$router.push({path:'/search'})
+    ...mapActions(['topic']),
+
+    topicPage(topicId) {
+      this.topic(topicId)
+      if (this.$route.path !== '/topic') {
+        this.$router.push({path: '/topic'})
       }
     }
   }

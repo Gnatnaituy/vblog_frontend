@@ -1,5 +1,5 @@
 <template>
-  <div id="register" v-title data-title="Register - VBLOG">
+  <div id="register" data-title="Register - VBLOG">
     <div class="me-login-box me-login-box-radius">
       <h1>VBLOG</h1>
 
@@ -79,7 +79,7 @@
 </script>
 
 <style scoped>
-  #login {
+  #register {
     min-width: 100%;
     min-height: 100%;
   }
