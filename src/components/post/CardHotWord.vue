@@ -5,7 +5,9 @@
     </div>
     <div v-for="word in this.hotWords" :key="word.word">
       <el-tag size="medium" effect="plain" class="hot-word" @click="postPage(word.word)">
-        {{ word.word + ' ' + word.count }}
+        <el-link type="primary" :underline=false style="font-weight: 400; font-size: 12px">
+          {{ word.word + ' ' + word.count }}
+        </el-link>
       </el-tag>
     </div>
   </el-card>

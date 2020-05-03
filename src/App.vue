@@ -10,7 +10,7 @@ export default {
     // Load state from sessionStorage when page loading
     if (sessionStorage.getItem("state") !== null) {
       this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(sessionStorage.getItem("state"))))
-    } 
+    }
 
     // Save state to sessionStorage when refresh
     window.addEventListener("beforeunload", () => {

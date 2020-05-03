@@ -1,15 +1,26 @@
 <template>
   <el-card class="card-topic">
-
-    <div class="card-topic-header">
-      <p>{{ currentTopic.name }}</p>
-      <div class="text item">{{ formatTime(currentTopic.createTime) }}注册了VBLOG</div>
+    <div class="demo-image">
+      <el-image class="card-user-background" :src="currentTopic.background"></el-image>
     </div>
 
-    <el-link type="primary" :underline=false v-on:click="userPage(currentTopic.createUser.id)">
-      {{ currentTopic.createUser.nickname }}
-    </el-link>
-    <div class="text item">{{ currentTopic.description }}</div>
+    <div class="card-topic-header">
+      <div class="text item">{{ currentTopic.name }}</div>
+      <div class="text item">{{ currentTopic.description }}</div>
+      <div class="text item">创建时间: {{ formatTime(currentTopic.createTime) }}</div>
+      <div class="text item">创建用户:
+        <el-link type="primary" :underline=false v-on:click="userPage(currentTopic.createUser.id)">
+          {{ currentTopic.createUser.nickname }}
+        </el-link>
+      </div>
+    </div>
+
+    <div v-for="user in currentTopic.activeUsers" v-bind:key="user.id">
+      <el-link type="primary" :underline=false v-on:click="userPage(user.id)">
+        <el-avatar :src="user.avatar" size='medium' @click="userPage(currentTopic.createUser.id)">
+        </el-avatar>
+      </el-link>
+    </div>
 
   </el-card>
 </template>

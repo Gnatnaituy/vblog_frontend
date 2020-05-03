@@ -5,7 +5,9 @@
     </div>
     <div v-for="topic in hotTopics" :key="topic.topic.id">
       <el-tag size="medium" effect="plain" class="hot-topic" @click="topicPage(topic.topic.id)">
-        {{ '#' + topic.topic.name + ' ' + topic.count }}
+        <el-link type="primary" :underline=false style="font-weight: 400; font-size: 12px">
+          {{ '#' + topic.topic.name + ' ' + topic.count }}
+        </el-link>
       </el-tag>
     </div>
   </el-card>

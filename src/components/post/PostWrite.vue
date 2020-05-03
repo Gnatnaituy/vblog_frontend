@@ -39,7 +39,7 @@
         header: {
           Authorization: "Bearer " + this.$store.state.token.accessToken
         },
-        uploadUrl: "/upload/image",
+        uploadUrl: "/upload/image/post-image",
         post: {
           content: '',
           visibility: '',

@@ -1,11 +1,11 @@
 <template>
   <div class="infinite-list-wrapper" style="overflow: auto">
-    <ul class="list" v-infinite-scroll="loadPosts" infinite-scroll-disabled="disabled">
+    <ul class="list" v-infinite-scroll="loadPosts" :infinite-scroll-disabled="disabled">
       <li v-for="post in posts" v-bind:key="post.id">
         <post-item @loadPosts="loadPosts" :post="post"></post-item>
       </li>
     </ul>
-    <el-card v-if="loading" style= "margin-bottom: 10px; box-shadow: none; min-height: 40px;">
+    <el-card v-if="this.loading" style= "margin-bottom: 10px; box-shadow: none; min-height: 40px;">
       <div style="text-align: center; color: gray">
         正在加载...
       </div>
@@ -33,6 +33,7 @@
     computed: {
       ...mapState(['loading', 'noNewPosts', 'searchVo', 'posts']),
       disabled () {
+        console.log("scroll page disabled: ", this.loading || this.noNewPosts)
         return this.loading || this.noNewPosts
       }
     },

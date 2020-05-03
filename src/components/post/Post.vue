@@ -1,10 +1,12 @@
 <template>
   <el-card class = "vblog_post">
     <!-- Post header -->
-    <div class = "vblog_post_header">
-      <el-avatar :src="post.poster.avatar"></el-avatar>
+    <div class="vblog_post_header">
+      <el-link type="primary" :underline=false style="justify-content: start" v-on:click="userPage(post.poster.id)">
+        <el-avatar :src="post.poster.avatar"></el-avatar>
+      </el-link>
       <div class="vblog_post_header_content">
-        <el-link type="primary" :underline=false v-on:click="userPage(post.poster.id)">
+        <el-link type="primary" :underline=false style="justify-content: start" v-on:click="userPage(post.poster.id)">
           {{ post.poster.nickname }}
         </el-link>
         <span class="vblog_post_post_time">
@@ -12,7 +14,7 @@
         </span>
       </div>
       <i class="el-icon-delete vblog-post-delete" @click="deletePost"
-        v-if="token !== null && post.poster.id == token.userId">
+        v-if="token !== null && post.poster.id === token.userId">
       </i>
     </div>
 
@@ -32,12 +34,14 @@
       </el-image>
     </div>
 
-    <!-- Post topics -->
+    <!-- topics -->
     <div class="vblog-post-topics" v-if="post.topics.length > 0">
-      <el-tag size="mini" effect="plain" class="vblog-post-topic-item"
-        v-for="topic in post.topics" v-bind:key="topic.id">
-        {{ "#" + topic.name }}
-      </el-tag>
+      <el-link type="primary" :underline=false  style="font-size: 13px"
+               v-for="topic in post.topics"
+               v-bind:key="topic.id"
+               v-on:click="topicPage(topic.id)">
+        <strong>#</strong>{{topic.name + '&nbsp&nbsp' }}
+      </el-link>
     </div>
 
     <!-- vote and comment button -->
@@ -50,13 +54,13 @@
 
     <!-- votes -->
     <div class="vblog_vote" v-if="post.voters.length !== 0">
-      <el-link type="primary" :underline=false
+      <el-link type="primary" :underline=false style="font-size: 13px"
                v-for="voter in post.voters"
                v-bind:key="voter.id"
                v-on:click="userPage(voter.id)">
         {{ voter.nickname }}
       </el-link>
-      觉得很赞
+      <el-link type="info" :underline=false style="font-weight: 400; font-size: 13px">觉得很赞</el-link>
     </div>
     <div class="vblog_vote" v-else>
       <p>&nbsp;</p>
@@ -247,7 +251,7 @@
   .vblog_post_header_content {
     display: flex;
     flex-direction: column;
-    margin: 5px 0 0 10px;
+    margin: 2px 0 0 10px;
   }
 
   .vblog-post-delete {
@@ -274,11 +278,7 @@
   }
 
   .vblog-post-topics {
-    padding: 0 10px 10px 50px;
-  }
-
-  .vblog-post-topic-item {
-    margin-right: 3px;
+    padding: 0 10px 0 50px;
   }
 
   .vblog_post_operation_button {

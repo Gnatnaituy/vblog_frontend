@@ -34,6 +34,8 @@ const state = {
         id: null,
         name: null,
         description: null,
+        background: null,
+        activeUsers: [],
         createUser: null,
         createTime: null
     },

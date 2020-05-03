@@ -1,7 +1,6 @@
 export function formatTime(time) {
-  const d = new Date(time)
   const now = Date.now()
-  const diff = (now - d) / 1000
+  const diff = (now - time) / 1000
 
   if (diff < 60) {
     return '刚刚'
@@ -12,6 +11,7 @@ export function formatTime(time) {
   } else if (diff < 3600 * 24 * 2) {
     return '昨天'
   } else {
-    return Math.ceil(diff / 86400) + '天前'
+    const d = new Date(time)
+    return d.getFullYear() + '年' + d.getMonth() + '月' + d.getDay() + '日' + ' ' + d.getHours() + ':' + d.getMinutes()
   }
 }
