@@ -17,6 +17,18 @@
       <el-col :span="7">
         <el-menu :router=true menu-trigger="click" mode="horizontal" style="float: right">
           <template v-if="this.logged()">
+            <!-- messages -->
+            <el-menu-item>
+              <el-popover placement="bottom" width="300px" trigger="click" transition="el-collapse-transition">
+                <message-vote v-show="messageVotes.length > 0"></message-vote>
+                <message-comment v-show="messageComments.length > 0"></message-comment>
+                <div class="text item" v-show="messageVotes.length === 0 && messageComments.length === 0">暂未新消息</div>
+                <el-badge slot="reference" :is-dot="hasNewMessage" class="item">
+                  <i class="el-icon-bell"></i>
+                </el-badge>
+              </el-popover>
+            </el-menu-item>
+
             <!-- avatar & submenus -->
             <el-submenu index="/">
               <template slot="title">
@@ -35,16 +47,6 @@
                 退出登录
               </el-menu-item>
             </el-submenu>
-
-            <!-- messages -->
-            <el-menu-item>
-              <el-popover placement="bottom-end" width="300px" trigger="click" transition="el-collapse-transition">
-                <message-vote v-show="messageVotes.length > 0"></message-vote>
-                <message-comment v-show="messageComments.length > 0"></message-comment>
-                <div class="text item" v-show="messageVotes.length === 0 && messageComments.length === 0">暂未新消息</div>
-                <i slot="reference" class="el-icon-bell"></i>
-              </el-popover>
-            </el-menu-item>
           </template>
           <template v-else>
             <!-- login & register -->
@@ -77,7 +79,10 @@
     },
 
     data() {
-      return {}
+      return {
+        hasNewMessage: this.$store.state.messageVotes.length > 0
+          || this.$store.state.messageComments.length > 0
+      }
     },
 
     mounted() {
@@ -141,4 +146,39 @@
     vertical-align: middle;
     background-color: rgba(95, 184, 120, 0.02);
   }
+  .el-menu-item {
+    font-size: 14px;
+    color: #303133;
+    padding: 0 20px 0 10px;
+    cursor: pointer;
+    -webkit-transition: border-color .3s,background-color .3s,color .3s;
+    transition: border-color .3s,background-color .3s,color .3s;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .el-submenu__title {
+    font-size: 14px;
+    color: #303133;
+    padding: 0;
+    cursor: pointer;
+    -webkit-transition: border-color .3s,background-color .3s,color .3s;
+    transition: border-color .3s,background-color .3s,color .3s;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .el-menu-item [class^=el-icon-bell] {
+    width: 24px;
+    text-align: center;
+    font-size: 30px;
+    vertical-align: middle;
+  }
+  .el-menu--horizontal>.el-menu-item {
+    padding: 15px 20px 0 10px;
+    height: 30px;
+    line-height: 30px;
+    margin: 0;
+    border-bottom: 2px solid transparent;
+    color: #909399;
+  }
+
 </style>
