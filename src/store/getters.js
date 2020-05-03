@@ -5,6 +5,8 @@ const getters = {
     } else {
       if (localStorage.token !== null && localStorage.token !== '') {
         state.token = JSON.parse(localStorage.token);
+        console.log("expiresTime: ", state.token.expiresTime)
+        console.log("nowTime: ", new Date().getTime())
         if (state.token.expiresTime <= new Date().getTime()) {
           localStorage.token = ''
           state.token.userId = {

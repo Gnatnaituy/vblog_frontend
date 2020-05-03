@@ -17,6 +17,7 @@ const state = {
     },
 
     searchVo: {
+        postId: null,
         keyword: null,
         topic: null,
         poster: null,
@@ -26,6 +27,9 @@ const state = {
     posts: [],
     loading: false,
     noNewPosts: false,
+
+    messageVotes: [],
+    messageComments: [],
 
     hotWords: [],
 

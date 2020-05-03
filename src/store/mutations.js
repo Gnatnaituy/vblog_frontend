@@ -46,6 +46,13 @@ const mutations = {
     state.noNewPosts = noNewPosts
   },
 
+  initMessageVotes (state, messageVotes) {
+    state.messageVotes = messageVotes
+  },
+  initMessageComments (state, messageComments) {
+    state.messageComments = messageComments
+  },
+
   // word
   initHotWords (state, words) {
     state.hotWords = words

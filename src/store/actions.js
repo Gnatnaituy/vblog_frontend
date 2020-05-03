@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 const actions = {
-  main (context) {
+  main (context, postId) {
     context.commit('changeSearchVo', {
+      postId: postId,
       keyword: null,
       topic: null,
       poster: null,
@@ -11,10 +12,12 @@ const actions = {
     })
     context.commit('changeNoNewPosts', false)
     context.commit('clearPosts')
+    console.log(context.state.searchVo)
   },
 
   post (context, keyword) {
     context.commit('changeSearchVo', {
+      postId: null,
       keyword: keyword,
       topic: null,
       poster: null,
@@ -27,6 +30,7 @@ const actions = {
 
   topic (context, topicId) {
     context.commit('changeSearchVo', {
+      postId: null,
       keyword: null,
       topic: topicId,
       poster: null,
@@ -46,6 +50,7 @@ const actions = {
 
   user (context, userId) {
     context.commit('changeSearchVo', {
+      postId: null,
       keyword: null,
       topic: null,
       poster: userId,
