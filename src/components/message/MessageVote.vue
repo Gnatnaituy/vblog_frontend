@@ -8,19 +8,22 @@
     </div>
     <div v-for="message in messageVotes" :key="message.id" class="text item message-item">
       <div>
-        <el-link type="primary" :underline=false class="message-item-text" v-on:click="userPage(message)" :disabled="message.status === 1">
+        <el-link type="primary" :underline=false class="message-item-text"
+                 v-on:click="userPage(message)" :disabled="message.status === 1">
           {{ message.createUser.nickname }}
         </el-link>
-        <el-link :underline=false class="message-item-text" v-on:click="mainPage(message)" :disabled="message.status === 1">
+        <el-link :underline=false class="message-item-text"
+                 :disabled="message.status === 1">
           赞了你的动态
         </el-link>
-        <span class="message-time">
-          {{ formatTime(message.createTime) }}
-        </span>
+        <el-link type="primary" :underline=false class="message-button"
+                 :disabled="message.status === 1" v-on:click="mainPage(message)">
+          查看详情
+        </el-link>
       </div>
-      <div>
-
-      </div>
+      <span class="message-time">
+        {{ formatTime(message.createTime) }}
+      </span>
     </div>
   </div>
 </template>
@@ -92,14 +95,13 @@
   }
   .message-button {
     font-weight: normal;
-    font-size: 13px;
+    font-size: 12px;
     float: right;
-    margin-left: 5px;
+    padding-top: 4px;
   }
   .message-time {
     padding: 2px 0 0 0;
-    font-size: 13px;
+    font-size: 11px;
     color: #606266;
-    float: right;
   }
 </style>

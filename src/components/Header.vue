@@ -19,10 +19,10 @@
           <template v-if="this.logged()">
             <!-- messages -->
             <el-menu-item>
-              <el-popover placement="bottom" width="300px" trigger="click" transition="el-collapse-transition">
-                <message-vote v-show="messageVotes.length > 0"></message-vote>
+              <el-popover placement="bottom" width="300px" trigger="click">
                 <message-comment v-show="messageComments.length > 0"></message-comment>
-                <div class="text item" v-show="messageVotes.length === 0 && messageComments.length === 0">暂未新消息</div>
+                <message-vote v-show="messageVotes.length > 0"></message-vote>
+                <div class="text item" v-show="!hasNewMessage">没有新消息</div>
                 <el-badge slot="reference" :is-dot="hasNewMessage" class="item">
                   <i class="el-icon-bell"></i>
                 </el-badge>

@@ -16,16 +16,17 @@
                  :disabled="message.status === 1" v-on:click="mainPage(message)">
           评论了你的动态
         </el-link>
-        <el-link v-else :underline=false class="message-item-text" v-on:click="mainPage(message)">
+        <el-link v-else :underline=false class="message-item-text">
           回复了你的评论
         </el-link>
-        <span class="message-time">
-          {{ formatTime(message.createTime) }}
-        </span>
+        <el-link type="primary" :underline=false class="message-button"
+                 :disabled="message.status === 1" v-on:click="mainPage(message)">
+          查看详情
+        </el-link>
       </div>
-      <div>
-
-      </div>
+      <span class="message-time">
+        {{ formatTime(message.createTime) }}
+      </span>
     </div>
   </div>
 </template>
@@ -98,15 +99,14 @@
   }
   .message-button {
     font-weight: normal;
-    font-size: 13px;
+    font-size: 12px;
     float: right;
     margin-left: 5px;
-    padding-top: 3px;
+    padding-top: 4px;
   }
   .message-time {
     padding: 2px 0 0 0;
-    font-size: 13px;
+    font-size: 11px;
     color: #606266;
-    float: right;
   }
 </style>

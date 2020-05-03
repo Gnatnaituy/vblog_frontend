@@ -1,8 +1,6 @@
 <template>
   <el-card class="card-hot-user">
-    <div slot="header" class="">
-      <span>活跃用户</span>
-    </div>
+    <b>活跃用户</b>
     <div v-for="user in hotUsers" :key="user.user.id">
       <el-tag size="medium" effect="plain" class="hot-user" @click="userPage(user.user.id)">
         {{ user.user.nickname + ' ' + user.count }}
