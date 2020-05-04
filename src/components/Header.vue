@@ -19,7 +19,8 @@
           <template v-if="this.logged()">
             <!-- messages -->
             <el-menu-item>
-              <el-popover placement="bottom" width="300px" trigger="click"  class="el-menu-notice">
+              <el-popover placement="bottom" width="400px" trigger="click"  class="el-menu-notice">
+                <message-friend-request v-show="friendRequests.length > 0"></message-friend-request>
                 <message-comment v-show="messageComments.length > 0"></message-comment>
                 <message-vote v-show="messageVotes.length > 0"></message-vote>
                 <div class="text item" v-show="!hasNewMessage">没有新消息</div>
@@ -66,8 +67,9 @@
 <script>
   import axios from 'axios'
   import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-  import MessageVote from "./message/MessageVote";
-  import MessageComment from "./message/MessageComment";
+  import MessageVote from './message/MessageVote'
+  import MessageComment from './message/MessageComment'
+  import MessageFriendRequest from './message/MessageFriendRequest'
 
 
   export default {
@@ -75,7 +77,8 @@
 
     components: {
       'message-vote': MessageVote,
-      'message-comment': MessageComment
+      'message-comment': MessageComment,
+      'message-friend-request': MessageFriendRequest
     },
 
     data() {
@@ -98,11 +101,17 @@
             this.$store.commit('initMessageComments', res.data.data)
           }
         })
+        axios.get('/user/friend/list/request').then(res => {
+          if (res.status === 200 && res.data.code === '1') {
+            this.$store.commit('initFriendRequests', res.data.data)
+          }
+        })
+        console.log(this.friendRequests)
       }
     },
 
     computed: {
-      ...mapState(['searchVo', 'token', 'messageVotes', 'messageComments'])
+      ...mapState(['searchVo', 'token', 'messageVotes', 'messageComments', 'friendRequests'])
     },
 
     methods: {

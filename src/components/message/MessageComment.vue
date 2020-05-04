@@ -14,19 +14,23 @@
         </el-link>
         <el-link v-if="message.commentId === null" :underline=false class="message-item-text"
                  :disabled="message.status === 1" v-on:click="mainPage(message)">
-          评论了你的动态
+          评论了你的动态:
+        </el-link>
+        <el-link v-if="message.commentId === null" type="primary" :underline=false class="message-button"
+                 :disabled="message.status === 1" v-on:click="mainPage(message)">
+          {{ message.postSummary }}
         </el-link>
         <el-link v-else :underline=false class="message-item-text">
-          回复了你的评论
+          回复了你的评论:
         </el-link>
-        <el-link type="primary" :underline=false class="message-button"
+        <el-link v-else type="primary" :underline=false class="message-button"
                  :disabled="message.status === 1" v-on:click="mainPage(message)">
-          查看详情
+          {{ message.commentSummary }}
         </el-link>
-      </div>
-      <span class="message-time">
+        <span class="message-time">
         {{ formatTime(message.createTime) }}
       </span>
+      </div>
     </div>
   </div>
 </template>
@@ -90,7 +94,7 @@
     padding: 6px;
   }
   .message-item {
-    width: 300px;
+    width: 400px;
     margin-top: 2px;
   }
   .message-item-text {
@@ -119,5 +123,6 @@
     padding: 2px 0 0 0;
     font-size: 11px;
     color: #606266;
+    float: right;
   }
 </style>

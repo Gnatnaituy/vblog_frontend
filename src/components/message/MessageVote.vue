@@ -14,16 +14,16 @@
         </el-link>
         <el-link :underline=false class="message-item-text"
                  :disabled="message.status === 1">
-          赞了你的动态
+          赞了你的动态:
         </el-link>
-        <el-link type="primary" :underline=false class="message-button"
+        <el-link type="primary" :underline=false class="message-item-text"
                  :disabled="message.status === 1" v-on:click="mainPage(message)">
-          查看详情
+          {{ message.postSummary }}
         </el-link>
+        <span class="message-time">
+          {{ formatTime(message.createTime) }}
+        </span>
       </div>
-      <span class="message-time">
-        {{ formatTime(message.createTime) }}
-      </span>
     </div>
   </div>
 </template>
@@ -86,7 +86,7 @@
     padding: 5px;
   }
   .message-item {
-    width: 300px;
+    width: 400px;
     margin-top: 2px;
   }
   .message-item-text {
@@ -114,5 +114,6 @@
     padding: 2px 0 0 0;
     font-size: 11px;
     color: #606266;
+    float: right;
   }
 </style>
