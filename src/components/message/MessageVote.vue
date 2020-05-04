@@ -14,7 +14,7 @@
         </el-link>
         <el-link :underline=false class="message-item-text"
                  :disabled="message.status === 1">
-          赞了你的动态:
+          赞了你:
         </el-link>
         <el-link type="primary" :underline=false class="message-item-text"
                  :disabled="message.status === 1" v-on:click="mainPage(message)">
@@ -84,10 +84,11 @@
 <style scoped>
   .message-card {
     padding: 5px;
+    margin-top: 5px;
   }
   .message-item {
     width: 400px;
-    margin-top: 2px;
+    margin-top: 6px;
   }
   .message-item-text {
     font-weight: normal;

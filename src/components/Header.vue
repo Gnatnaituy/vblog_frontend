@@ -21,7 +21,10 @@
             <el-menu-item>
               <el-popover placement="bottom" width="400px" trigger="click"  class="el-menu-notice">
                 <message-friend-request v-show="friendRequests.length > 0"></message-friend-request>
+                <el-divider v-if="friendRequests.length > 0 && (messageComments.length > 0 || messageVotes.length > 0)">
+                </el-divider>
                 <message-comment v-show="messageComments.length > 0"></message-comment>
+                <el-divider v-if="messageComments.length > 0 && messageVotes.length > 0"></el-divider>
                 <message-vote v-show="messageVotes.length > 0"></message-vote>
                 <div class="text item" v-show="!hasNewMessage">没有新消息</div>
                 <el-badge slot="reference" :is-dot="hasNewMessage" class="item">
@@ -192,5 +195,10 @@
     border-bottom: 2px solid transparent;
     color: #909399;
   }
-
+  .el-divider--horizontal {
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 6px 0 6px 0;
+  }
 </style>

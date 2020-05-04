@@ -123,6 +123,7 @@
           </el-button>
         </div>
 
+        <!-- remark and visibility dialog when send friend request -->
         <el-dialog title="添加好友" width="400px" :show-close="false" :center="true" :visible.sync="addDialogVisible">
           <el-form :model="friendAddVo">
             <el-form-item label="好友备注" :label-width="formLabelWidth">
@@ -143,6 +144,7 @@
           </div>
         </el-dialog>
 
+        <!-- remark and visibility dialog when modify -->
         <el-dialog title="修改备注和权限" width="400px" :show-close="false" :center="true" :visible.sync="modifyDialogVisible">
           <el-form :model="changeRemarkAndVisibilityVo">
             <el-form-item label="好友备注" :label-width="formLabelWidth">

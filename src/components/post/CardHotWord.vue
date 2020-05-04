@@ -1,6 +1,6 @@
 <template>
   <el-card class="card-hot-word">
-    <b>热门单词</b>
+    <b>热门词条</b>
     <el-divider></el-divider>
     <div class="hot-topic-content">
       <el-tag size="medium" effect="plain" class="hot-word-item"

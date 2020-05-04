@@ -14,16 +14,12 @@
         </el-link>
         <el-link v-if="message.commentId === null" :underline=false class="message-item-text"
                  :disabled="message.status === 1" v-on:click="mainPage(message)">
-          评论了你的动态:
-        </el-link>
-        <el-link v-if="message.commentId === null" type="primary" :underline=false class="message-button"
-                 :disabled="message.status === 1" v-on:click="mainPage(message)">
-          {{ message.postSummary }}
+          评论了你:
         </el-link>
         <el-link v-else :underline=false class="message-item-text">
-          回复了你的评论:
+          回复了你:
         </el-link>
-        <el-link v-else type="primary" :underline=false class="message-button"
+        <el-link type="primary" :underline=false class="message-item-text"
                  :disabled="message.status === 1" v-on:click="mainPage(message)">
           {{ message.commentSummary }}
         </el-link>
@@ -91,11 +87,12 @@
 
 <style scoped>
   .message-card {
-    padding: 6px;
+    padding: 5px;
+    margin-top: 5px;
   }
   .message-item {
     width: 400px;
-    margin-top: 2px;
+    margin-top: 6px;
   }
   .message-item-text {
     font-weight: normal;
