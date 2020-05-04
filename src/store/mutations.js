@@ -75,6 +75,9 @@ const mutations = {
   },
   changeCurrentUser (state, user) {
     state.currentUser = user
+  },
+  initFriends (state, friends) {
+    state.friends = friends
   }
 }
 

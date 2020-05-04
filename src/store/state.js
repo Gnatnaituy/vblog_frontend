@@ -1,4 +1,5 @@
 const state = {
+    // User related data
     token: {
         userId: null,
         username: null,
@@ -15,7 +16,32 @@ const state = {
         scope: null,
         tokenType: null
     },
+    hotUsers: [],
+    recommendUsers: [],
+    currentUser: {
+        id: null,
+        username: null,
+        nickname: null,
+        email: null,
+        phone: null,
+        avatar: null,
+        background: null,
+        bio: null,
+        age: null,
+        gender: null,
+        country: null,
+        province: null,
+        city: null,
+        registerTime: null,
+        friendStatus: null,
+        blocks: [],
+        blocked: null
+    },
 
+    friends: [],
+    messageFriendRequests: [],
+
+    // Post related data
     searchVo: {
         postId: null,
         keyword: null,
@@ -42,26 +68,6 @@ const state = {
         activeUsers: [],
         createUser: null,
         createTime: null
-    },
-
-    hotUsers: [],
-    recommendUsers: [],
-    currentUser: {
-        id: null,
-        username: null,
-        age: null,
-        avatar: null,
-        background: null,
-        bio: null,
-        blocks: [],
-        city: null,
-        country: null,
-        email: null,
-        gender: null,
-        nickname: null,
-        phone: null,
-        province: null,
-        registerTime: null
     }
 }
 

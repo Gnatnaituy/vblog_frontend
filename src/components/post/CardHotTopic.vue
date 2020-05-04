@@ -1,10 +1,11 @@
 <template>
   <el-card class="card-hot-topic">
-    <div slot="header" class="">
-      <span>热门话题</span>
-    </div>
-    <div v-for="topic in hotTopics" :key="topic.topic.id">
-      <el-tag size="medium" effect="plain" class="hot-topic" @click="topicPage(topic.topic.id)">
+    <b>热门话题</b>
+    <el-divider></el-divider>
+    <div class="hot-topic-content">
+      <el-tag size="medium" effect="plain" class="hot-topic-item"
+              v-for="topic in hotTopics" :key="topic.topic.id"
+              @click="topicPage(topic.topic.id)">
         <el-link type="primary" :underline=false style="font-weight: 400; font-size: 12px">
           {{ '#' + topic.topic.name + ' ' + topic.count }}
         </el-link>
@@ -55,15 +56,23 @@ export default {
 </script>
 
 <style scoped>
-.card-hot-topic {
-  box-shadow: none;
-  margin-bottom: 10px;
-}
-.hot-topic-content {
-  margin-bottom: 20px;
-}
-.hot-topic {
-  float: left;
-  margin: 2px
-}
+  .card-hot-topic {
+    box-shadow: none;
+    margin: 0 0 10px 0;
+  }
+  .hot-topic-content {
+    padding: 6px 0 0 0;
+    width: 100%;
+    min-height: 120px;
+  }
+  .el-divider--horizontal {
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 4px 0;
+  }
+  .hot-topic-item {
+    float: left;
+    margin: 2px
+  }
 </style>

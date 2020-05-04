@@ -42,7 +42,7 @@
         uploadUrl: "/upload/image/post-image",
         post: {
           content: '',
-          visibility: '',
+          visibility: 1,
           images: [],
           topics: []
         }

@@ -19,7 +19,7 @@
           <template v-if="this.logged()">
             <!-- messages -->
             <el-menu-item>
-              <el-popover placement="bottom" width="300px" trigger="click">
+              <el-popover placement="bottom" width="300px" trigger="click"  class="el-menu-notice">
                 <message-comment v-show="messageComments.length > 0"></message-comment>
                 <message-vote v-show="messageVotes.length > 0"></message-vote>
                 <div class="text item" v-show="!hasNewMessage">没有新消息</div>
@@ -82,20 +82,23 @@
       return {
         hasNewMessage: this.$store.state.messageVotes.length > 0
           || this.$store.state.messageComments.length > 0
+          || this.$store.state.messageFriendRequests.length > 0
       }
     },
 
     mounted() {
-      axios.get('/post/vote/messages').then(res => {
-        if (res.status === 200 && res.data.code === '1') {
-          this.$store.commit('initMessageVotes', res.data.data)
-        }
-      })
-      axios.get('/post/comment/messages').then(res => {
-        if (res.status === 200 && res.data.code === '1') {
-          this.$store.commit('initMessageComments', res.data.data)
-        }
-      })
+      if (this.$store.getters.logged === true) {
+        axios.get('/post/vote/messages').then(res => {
+          if (res.status === 200 && res.data.code === '1') {
+            this.$store.commit('initMessageVotes', res.data.data)
+          }
+        })
+        axios.get('/post/comment/messages').then(res => {
+          if (res.status === 200 && res.data.code === '1') {
+            this.$store.commit('initMessageComments', res.data.data)
+          }
+        })
+      }
     },
 
     computed: {
@@ -172,8 +175,8 @@
     font-size: 30px;
     vertical-align: middle;
   }
-  .el-menu--horizontal>.el-menu-item {
-    padding: 15px 20px 0 10px;
+  .el-menu-notice {
+    padding: 15px 0 0 10px;
     height: 30px;
     line-height: 30px;
     margin: 0;

@@ -1,25 +1,48 @@
 <template>
   <el-card class="card-topic">
     <div class="demo-image">
-      <el-image class="card-user-background" :src="currentTopic.background"></el-image>
+      <el-image class="card-topic-background" :src="currentTopic.background"></el-image>
     </div>
 
-    <div class="card-topic-header">
-      <div class="text item">{{ currentTopic.name }}</div>
-      <div class="text item">{{ currentTopic.description }}</div>
-      <div class="text item">创建时间: {{ formatTime(currentTopic.createTime) }}</div>
-      <div class="text item">创建用户:
-        <el-link type="primary" :underline=false v-on:click="userPage(currentTopic.createUser.id)">
-          {{ currentTopic.createUser.nickname }}
-        </el-link>
+    <div class="topic-information">
+      <div>
+        <div class="text item topic-information-item">
+          <b>名称</b>:
+          <p class="topic-information-value">
+            {{ currentTopic.name }}
+          </p>
+        </div>
+        <div class="text item topic-information-item">
+          <b>描述</b>:
+          <p class="topic-information-value">
+            {{ currentTopic.description }}
+          </p>
+        </div>
+        <div class="text item topic-information-item">
+          <b>创建人</b>:
+          <p class="topic-information-value">
+            {{ currentTopic.createUser.nickname }}
+          </p>
+        </div>
+        <div class="text item topic-information-item">
+          <b>创建时间</b>:
+          <p class="topic-information-value" style="margin-top: 2px">
+            {{ formatTime(currentTopic.createTime) }}
+          </p>
+        </div>
+
+        <el-divider></el-divider>
+        <div class="text item topic-information-item">
+          <b>活跃用户</b>
+          <div v-for="user in currentTopic.activeUsers" v-bind:key="user.id">
+            <el-link type="primary" :underline=false v-on:click="userPage(user.id)">
+              <el-avatar :size="35" :src="user.avatar" size='medium' style="margin-top: 5px"
+                         @click="userPage(currentTopic.createUser.id)">
+              </el-avatar>
+            </el-link>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div v-for="user in currentTopic.activeUsers" v-bind:key="user.id">
-      <el-link type="primary" :underline=false v-on:click="userPage(user.id)">
-        <el-avatar :src="user.avatar" size='medium' @click="userPage(currentTopic.createUser.id)">
-        </el-avatar>
-      </el-link>
     </div>
 
   </el-card>
@@ -53,10 +76,6 @@
 </script>
 
 <style scoped>
-  .el-card__body {
-    padding: 0
-  }
-
   .card-topic {
     box-shadow: none;
   }
@@ -67,7 +86,21 @@
     margin: -20px -20px 0 -20px;
   }
 
-  .card-topic-header {
+  .topic-information {
+    width: 100%;
+    font-size: 14px;
     display: inline-block;
+  }
+  .topic-information-item {
+    padding-top: 5px;
+  }
+  .topic-information-value {
+    float: right;
+  }
+  .el-divider--horizontal {
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 14px 0 4px 0;
   }
 </style>

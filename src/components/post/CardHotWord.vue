@@ -1,10 +1,11 @@
 <template>
   <el-card class="card-hot-word">
-    <div slot="header" class="">
-      <span>热门词条</span>
-    </div>
-    <div v-for="word in this.hotWords" :key="word.word">
-      <el-tag size="medium" effect="plain" class="hot-word" @click="postPage(word.word)">
+    <b>热门单词</b>
+    <el-divider></el-divider>
+    <div class="hot-topic-content">
+      <el-tag size="medium" effect="plain" class="hot-word-item"
+              v-for="word in this.hotWords" :key="word.word"
+              @click="postPage(word.word)">
         <el-link type="primary" :underline=false style="font-weight: 400; font-size: 12px">
           {{ word.word + ' ' + word.count }}
         </el-link>
@@ -55,12 +56,23 @@ export default {
 </script>
 
 <style scoped>
-.card-hot-word {
-  box-shadow: none;
-  margin-bottom: 10px;
-}
-.hot-word {
-  float: left;
-  margin: 2px
-}
+  .card-hot-word {
+    box-shadow: none;
+    margin: 0 0 10px 0;
+  }
+  .hot-topic-content {
+    padding: 6px 0 0 0;
+    width: 100%;
+    min-height: 250px;
+  }
+  .hot-word-item {
+    float: left;
+    margin: 2px
+  }
+  .el-divider--horizontal {
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 4px 0;
+  }
 </style>

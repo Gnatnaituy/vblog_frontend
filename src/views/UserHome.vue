@@ -11,7 +11,7 @@
           </el-col>
 
           <el-col :span="10" style="padding: 0 10px 10px 10px">
-            <div class="text item vblog-post-me">我的动态</div>
+            <div class="text item vblog-post-me"> <b>{{ poster() }}</b> </div>
             <scroll-page></scroll-page>
           </el-col>
 
@@ -32,23 +32,30 @@ import CardHotUser from "../components/user/CardHotUser"
 import { mapState } from "vuex"
 
 export default {
-  name: "UserHome",
+  name: 'UserHome',
 
   components: {
-    "component-header": Header,
-    "card-user": CardUser,
-    "scroll-page": ScrollPage,
-    "card-hot-user": CardHotUser
+    'component-header': Header,
+    'card-user': CardUser,
+    'scroll-page': ScrollPage,
+    'card-hot-user': CardHotUser
   },
 
   data() {
-    return {};
+    return {
+
+    };
   },
 
   computed: {
-    ...mapState([
-      "token"
-    ])
+    ...mapState(['token', 'currentUser'])
+  },
+
+  methods: {
+    poster() {
+      return this.token.userId === this.currentUser.id ? '我的动态' :
+        this.currentUser.gender === '男' ? '他的动态' : '她的动态'
+    }
   }
 };
 </script>

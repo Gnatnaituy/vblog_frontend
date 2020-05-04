@@ -252,10 +252,12 @@
     display: flex;
     flex-direction: column;
     margin: 2px 0 0 10px;
+    width: 100%;
   }
 
   .vblog-post-delete {
     float: right;
+    margin: 10px 10px 0 0;
   }
 
   .vblog_post_post_time {

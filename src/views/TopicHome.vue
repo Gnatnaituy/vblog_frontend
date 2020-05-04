@@ -11,6 +11,7 @@
           </el-col>
 
           <el-col :span="10" style="padding: 0 10px 10px 10px">
+            <div class="text item vblog-topic-post"> <b>相关动态</b> </div>
             <scroll-page></scroll-page>
           </el-col>
 
@@ -42,12 +43,17 @@ export default {
 </script>
 
 <style>
-.el-main {
-  padding: 0;
-}
+  .el-main {
+    padding: 0;
+  }
 
-.el-card {
-  border-radius: 4px;
-  border: none;
-}
+  .el-card {
+    border-radius: 4px;
+    border: none;
+  }
+
+  .vblog-topic-post {
+    padding: 0 5px 5px 5px;
+    color: rgb(70, 70, 70);
+  }
 </style>

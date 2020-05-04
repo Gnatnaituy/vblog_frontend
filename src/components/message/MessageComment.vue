@@ -2,8 +2,8 @@
   <div class="message-card">
     <div>
       <b>评论信息</b>
-      <el-link type="primary" :underline=false class="message-button" v-on:click="readAllMessage()">
-        全部标为已读
+      <el-link type="primary" :underline=false class="message-button-read-all" v-on:click="readAllMessage()">
+        <i class="el-icon-finished"></i>
       </el-link>
     </div>
     <div v-for="message in messageComments" :key="message.id" class="text item message-item">
@@ -87,7 +87,7 @@
 
 <style scoped>
   .message-card {
-    padding: 5px;
+    padding: 6px;
   }
   .message-item {
     width: 300px;
@@ -96,6 +96,17 @@
   .message-item-text {
     font-weight: normal;
     font-size: 13px;
+  }
+  .message-button-read-all {
+    float: right;
+    padding-top: 2px;
+  }
+  .el-icon-finished {
+    font-weight: bold;
+    font-size: 16px;
+    float: right;
+    text-align: center;
+    vertical-align: middle;
   }
   .message-button {
     font-weight: normal;
