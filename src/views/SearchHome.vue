@@ -28,20 +28,20 @@
 </template>
 
 <script>
-import Header from "../components/Header";
-import ScrollPage from "../components/ScrollPage";
+import Header from '../components/Header';
+import ScrollPage from '../components/ScrollPage';
 import CardHotWord from '../components/post/CardHotWord'
-import CardUser from "../components/user/CardUser";
-import { mapGetters } from "vuex";
+import CardUser from '../components/user/CardUser';
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "SearchHome",
+  name: 'SearchHome',
 
   components: {
-    "component-header": Header,
-    "scroll-page": ScrollPage,
-    "card-hot-word": CardHotWord,
-    "card-user": CardUser
+    'component-header': Header,
+    'scroll-page': ScrollPage,
+    'card-hot-word': CardHotWord,
+    'card-user': CardUser
   },
 
   methods: {

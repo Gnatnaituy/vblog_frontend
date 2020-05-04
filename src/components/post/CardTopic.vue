@@ -34,10 +34,11 @@
         <el-divider></el-divider>
         <div class="text item topic-information-item">
           <b>活跃用户</b>
-          <div v-for="user in currentTopic.activeUsers" v-bind:key="user.id">
-            <el-link type="primary" :underline=false v-on:click="userPage(user.id)">
-              <el-avatar :size="35" :src="user.avatar" size='medium' style="margin-top: 5px"
-                         @click="userPage(currentTopic.createUser.id)">
+          <div>
+            <el-link type="primary" :underline=false style="padding: 2px"
+                     v-for="user in currentTopic.activeUsers" v-bind:key="user.id"
+                     v-on:click="userPage(user.id)">
+              <el-avatar :src="user.avatar" size='small' @click="userPage(currentTopic.createUser.id)">
               </el-avatar>
             </el-link>
           </div>

@@ -32,7 +32,7 @@ import axios from 'axios'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: "CardHotUser",
+  name: 'CardHotUser',
 
   data() {
     return {
@@ -43,13 +43,11 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      "hotUsers"
-    ])
+    ...mapState(['hotUsers'])
   },
 
   mounted() {
-    axios.post("/open/post/hot-users", this.aggregationVo).then(res => {
+    axios.post('/open/post/hot-users', this.aggregationVo).then(res => {
       if (res.status === 200 && res.data.code === '1') {
         this.$store.commit('initHotUsers', res.data.data)
       }

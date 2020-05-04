@@ -7,7 +7,9 @@
       <el-container style="margin-top: 70px">
         <el-row style="width: 100%">
           <el-col :span="5" :offset="2">
-            <card-hot-user style="position: relative"></card-hot-user>
+            <card-friends v-if="token.userId === currentUser.id"></card-friends>
+            <card-blocks v-if="token.userId === currentUser.id"></card-blocks>
+            <card-hot-user v-if="token.userId !== currentUser.id" style="position: relative"></card-hot-user>
           </el-col>
 
           <el-col :span="10" style="padding: 0 10px 10px 10px">
@@ -25,11 +27,13 @@
 </template>
 
 <script>
-import Header from "../components/Header"
-import CardUser from "../components/user/CardUser"
-import ScrollPage from "../components/ScrollPage"
-import CardHotUser from "../components/user/CardHotUser"
-import { mapState } from "vuex"
+import Header from '../components/Header'
+import CardUser from '../components/user/CardUser'
+import ScrollPage from '../components/ScrollPage'
+import CardHotUser from '../components/user/CardHotUser'
+import CardFriends from '../components/user/CardFriends'
+import CardBlocks from "../components/user/CardBlocks";
+import { mapState } from 'vuex'
 
 export default {
   name: 'UserHome',
@@ -38,7 +42,9 @@ export default {
     'component-header': Header,
     'card-user': CardUser,
     'scroll-page': ScrollPage,
-    'card-hot-user': CardHotUser
+    'card-hot-user': CardHotUser,
+    'card-friends': CardFriends,
+    'card-blocks': CardBlocks
   },
 
   data() {

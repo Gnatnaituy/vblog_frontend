@@ -78,7 +78,7 @@
         <el-divider v-if="this.logged()"></el-divider>
         <div class="text item user-information-item">
           <el-button size="mini" plain class="user-operation-button"
-                     v-if="currentUser.blocked === false"
+                     v-if="currentUser.blocked === false && currentUser.friendStatus !== 'IS_FRIEND'"
                      @click="blockUser()">
             屏蔽用户
           </el-button>
@@ -254,7 +254,7 @@
       },
 
       deleteFriend() {
-        axios.post('/user/friend.delete', this.deleteFriendVo).then(res => {
+        axios.post('/user/friend/delete', this.deleteFriendVo).then(res => {
           if (res.status === 200 && res.data.code === '1') {
             this.$store.state.currentUser.friendStatus = 'NOT_FRIEND'
             this.$store.commit('changeCurrentUser', this.$store.state.currentUser)
