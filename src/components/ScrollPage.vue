@@ -54,9 +54,8 @@
                 data.content.map(o => o.content = o.content.replace(reg, '<mark>' + this.searchVo.keyword + '</mark>'))
               }
               this.$store.commit('appendNewPosts', data.content)
-              if (this.searchVo.start === data.totalPage) {
-                this.$store.commit('changeNoNewPosts', true)
-              }
+            } else {
+              this.$store.commit('changeNoNewPosts', true)
             }
           }
         })

@@ -8,8 +8,8 @@
         <div v-if="comment.commentId !== null" style="padding: 0 5px; font-size: 14px; color: #454649">
           回复
         </div>
-        <el-link type="primary" :underline=false v-if="comment.commentId !== null" v-on:click="userPage(comment.commenter.id)">
-          {{ comment.commenter.nickname }}
+        <el-link type="primary" :underline=false v-if="comment.commentId !== null" v-on:click="userPage(comment.originCommenter.id)">
+          {{ comment.originCommenter.nickname }}
         </el-link>
         <div class="text item" style="padding: 0; margin: 0; font-size: 14px; color: #454649">
           : {{ comment.content }}

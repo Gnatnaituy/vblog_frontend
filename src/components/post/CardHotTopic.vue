@@ -63,7 +63,7 @@ export default {
   .hot-topic-content {
     padding: 6px 0 0 0;
     width: 100%;
-    min-height: 120px;
+    min-height: 130px;
   }
   .el-divider--horizontal {
     display: block;

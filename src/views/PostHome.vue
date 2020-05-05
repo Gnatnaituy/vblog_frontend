@@ -9,7 +9,6 @@
         <el-row style="width: 100%">
           <!-- aggregations -->
           <el-col :span="5" :offset="2">
-            <card-hot-user style="position: relative"></card-hot-user>
             <card-hot-topic style="position: relative"></card-hot-topic>
             <card-hot-word style="position: relative"></card-hot-word>
           </el-col>
@@ -22,6 +21,7 @@
 
           <!-- current user info & user recommends -->
           <el-col :span="5">
+            <card-hot-user style="position: relative"></card-hot-user>
           </el-col>
         </el-row>
       </el-container>

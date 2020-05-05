@@ -33,8 +33,8 @@ const state = {
     province: null,
     city: null,
     registerTime: null,
-    friendStatus: null,
     blocks: [],
+    friendStatus: null,
     blocked: null
   },
 

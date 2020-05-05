@@ -128,7 +128,6 @@
 
     data() {
       return {
-        formLabelWidth: '80px',
         showOperations: false,
         showAcceptForm: false,
         acceptFriendRequestVo: {

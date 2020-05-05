@@ -88,7 +88,7 @@
       return {
         hasNewMessage: this.$store.state.messageVotes.length > 0
           || this.$store.state.messageComments.length > 0
-          || this.$store.state.messageFriendRequests.length > 0
+          || this.$store.state.friendRequests.length > 0
       }
     },
 
@@ -200,5 +200,23 @@
     height: 1px;
     width: 100%;
     margin: 6px 0 6px 0;
+  }
+  .el-input__inner {
+    background-color: #F2F6FC;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-radius: 4px;
+  }
+
+  .el-dialog__header {
+    padding: 0;
+  }
+  .el-dialog__body {
+    padding: 20px;
+    color: #606266;
+    font-size: 14px;
+    word-break: break-all;
   }
 </style>

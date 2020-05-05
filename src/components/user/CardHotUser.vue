@@ -4,7 +4,7 @@
     <el-divider></el-divider>
     <div class="hot-user-content" v-for="user in hotUsers" :key="user.user.id">
       <el-link type="primary" :underline=false v-on:click="userPage(user.user.id)">
-        <el-avatar :size='35' :src="user.user.avatar"></el-avatar>
+        <el-avatar :size='30' :src="user.user.avatar"></el-avatar>
       </el-link>
       <el-link type="primary" :underline=false v-on:click="userPage(user.user.id)">
         {{ user.user.nickname }}
@@ -71,14 +71,15 @@ export default {
   .card-hot-user {
     box-shadow: none;
     margin: 0 0 10px 0;
+    min-height: 300px;
   }
   .hot-user-content {
-    padding: 6px 0 0 0;
+    padding: 4px 0 0 0;
     width: 100%;
   }
   .hot-user-content-num {
     float: right;
-    padding: 8px 4px 0 0
+    padding: 6px 4px 0 0
   }
   .el-divider--horizontal {
     display: block;

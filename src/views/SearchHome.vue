@@ -17,7 +17,7 @@
           </el-col>
 
           <el-col :span="5">
-            <card-user v-if="this.logged()"></card-user>
+
           </el-col>
 
         </el-row>

@@ -15,7 +15,6 @@
     <div style="display: flex; flex-direction: row">
       <!-- Image upload -->
       <el-upload ref="upload" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" multiple
-        :headers="header"
         :action="uploadUrl"
         :on-success="uploadSuccess"
         :on-remove="uploadRemove">
@@ -36,10 +35,7 @@
 
     data() {
       return {
-        header: {
-          Authorization: "Bearer " + this.$store.state.token.accessToken
-        },
-        uploadUrl: "/upload/image/post-image",
+        uploadUrl: "/open/upload/image/post-image",
         post: {
           content: '',
           visibility: 1,
@@ -83,3 +79,13 @@
     }
   };
 </script>
+
+<style scoped>
+  .el-textarea >>> .el-textarea__inner {
+    background-color: #F2F6FC;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+  }
+</style>

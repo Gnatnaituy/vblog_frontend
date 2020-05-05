@@ -7,7 +7,7 @@
           <el-input placeholder="Username" v-model="loginData.username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input placeholder="Password" type="password" v-model="loginData.password"></el-input>
+          <el-input placeholder="Password" show-password type="password" v-model="loginData.password"></el-input>
         </el-form-item>
         <el-form-item size="medium" class="me-login-button">
           <el-button type="primary" @click.native.prevent="login('userForm')">登录</el-button>
