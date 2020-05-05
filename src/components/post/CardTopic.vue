@@ -13,21 +13,22 @@
           </p>
         </div>
         <div class="text item topic-information-item">
-          <b>描述</b>:
-          <p class="topic-information-value">
-            {{ currentTopic.description }}
-          </p>
-        </div>
-        <div class="text item topic-information-item">
           <b>创建人</b>:
-          <p class="topic-information-value">
+          <el-link type="primary" :underline="false" class="topic-information-value"
+                   v-on:click="userPage(currentTopic.createUser.id)">
             {{ currentTopic.createUser.nickname }}
-          </p>
+          </el-link>
         </div>
         <div class="text item topic-information-item">
           <b>创建时间</b>:
           <p class="topic-information-value" style="margin-top: 2px">
             {{ formatTime(currentTopic.createTime) }}
+          </p>
+        </div>
+        <div class="text item topic-information-item">
+          <b>描述</b>:
+          <p class="topic-information-value">
+            {{ currentTopic.description }}
           </p>
         </div>
 
@@ -43,30 +44,82 @@
             </el-link>
           </div>
         </div>
+
+        <el-divider v-if="this.logged()"></el-divider>
+        <div v-if="this.logged()">
+          <el-button size="mini" plain class="topic-operation-button"
+                     v-if="currentTopic.createUser.id === token.userId"
+                     @click="toggleUpdateTopicInfoDialog()">
+            编辑话题信息
+          </el-button>
+        </div>
+        <el-dialog width="30%" :show-close="false" :visible.sync="updateTopicInfoDialogVisibility">
+          <div style="height: 160px;">
+            <el-upload class="background-uploader" action="/open/upload/image/topic-background"
+                       accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
+                       :show-file-list="false"
+                       :on-success="uploadBackgroundSuccess">
+              <img :src="currentTopic.background" class="background" alt="背景图">
+            </el-upload>
+          </div>
+          <div style="padding: 10px 0 0 0">
+            <el-input size="mini" v-model="currentTopic.description"></el-input>
+            <el-button size="mini" class="edit-info-bottom" @click="toggleUpdateTopicInfoDialog()">取消</el-button>
+            <el-button size="mini" class="edit-info-bottom" @click="updateTopicInfo()">保存</el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
-
   </el-card>
 </template>
 
 <script>
+  import axios from 'axios'
   import { formatTime } from '../../utils/time';
-  import { mapState, mapActions } from 'vuex'
+  import { mapState, mapActions, mapGetters } from 'vuex'
 
   export default {
     name: 'CardTopic',
 
+    data() {
+      return {
+        updateTopicInfoDialogVisibility: false
+      }
+    },
+
     computed: {
-      ...mapState(['currentTopic'])
+      ...mapState(['token', 'currentTopic'])
     },
 
     methods: {
+      ...mapGetters(['logged']),
       ...mapActions(['user']),
       userPage(userId) {
         this.user(userId)
         if (this.$route.path !== '/user') {
           this.$router.push({path: '/user'})
         }
+      },
+
+      toggleUpdateTopicInfoDialog() {
+        this.updateTopicInfoDialogVisibility = !this.updateTopicInfoDialogVisibility
+      },
+      uploadBackgroundSuccess(res) {
+        if (res.code === '1') {
+          this.currentTopic.background = res.data
+        }
+      },
+      updateTopicInfo() {
+        axios.post('/post/topic/update', {
+          topicId: this.currentTopic.id,
+          description: this.currentTopic.description,
+          background: this.currentTopic.background
+        }).then(res => {
+          if (res.status === 200 && res.data.code === '1') {
+            this.toggleUpdateTopicInfoDialog()
+            this.$store.commit('changeCurrentTopic', this.currentTopic)
+          }
+        })
       },
 
       formatTime(time) {
@@ -97,6 +150,35 @@
   }
   .topic-information-value {
     float: right;
+  }
+  .topic-operation-button {
+    width: 100%;
+    margin-top: 5px;
+  }
+  .background-uploader {
+    width: 100%;
+    float: right;
+    margin-bottom: 20px;
+  }
+  .background-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    float: right;
+    margin-right: 0;
+  }
+  .background {
+    width: 100%;
+    height: 200px;
+    float: right;
+    display: block;
+    border-radius: 4px;
+  }
+  .edit-info-bottom {
+    margin-top: 20px;
+    width: 48%;
   }
   .el-divider--horizontal {
     display: block;
