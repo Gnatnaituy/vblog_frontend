@@ -15,32 +15,28 @@
           : {{ comment.content }}
         </div>
       </div>
-      <div style="display: flex; flex-direction: row">
+      <div>
         <span style="padding: 0; font-size: 12px; color: #606266;" >
           {{ formatTime(comment.commentTime) }}
         </span>
-        <el-button type="text" size="mini" style="padding: 0; align-items: flex-end"
-          v-show="isDeleteButton === true"
-          @click="deleteComment(comment.id)">
-          删除
-        </el-button>
-        <el-button type="text" size="mini" style="padding: 0; align-items: flex-end"
-          v-show="isReplyButton === true"
-          @click="showReply">
+        <el-button type="text" size="mini" style="padding: 0 10px 0 0; float: right"
+                   v-show="isReplyButton === true"
+                   @click="showReply">
           回复
+        </el-button>
+        <el-button type="text" size="mini" style="padding: 0 10px 0 0; float: right"
+                   v-show="isDeleteButton === true"
+                   @click="deleteComment(comment.id)">
+          删除
         </el-button>
       </div>
     </div>
 
     <!-- comment form -->
-    <el-form v-show="isReply === true" :inline="true" :model="reply" style="margin: 0">
-      <el-form-item>
-        <el-input v-model="reply.content" size="mini"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button plain round size="mini" @click="saveReply">回复</el-button>
-      </el-form-item>
-    </el-form>
+    <el-input v-model="reply.content" size="mini" v-show="isReply === true"
+              placeholder="请输入内容" style="width: 98%; margin: 5px 0 0 0"
+              @keyup.enter.native="saveReply()">
+    </el-input>
   </div>
 </template>
 
@@ -132,18 +128,10 @@ export default {
 
     deleteComment(commentId) {
       axios.delete(`/post/comment/${commentId}`).then(res => {
-        if (res.status === 200) {
-          if (res.data.code === '1') {
-            setTimeout(() => {
-              this.$emit('refreshComments');
-            }, 1000)
-          } else {
-            this.$message({
-              type: 'warning',
-              message: res.data.message,
-              showClose: false
-            });
-          }
+        if (res.status === 200 && res.data.code === '1') {
+          this.$store.state.posts.filter(o => o.id === this.comment.postId)
+            .map(o => o.comments = o.comments.filter(o => o.id !== this.comment.id))
+          this.$store.commit('changePosts', this.$store.state.posts)
         }
       })
     }

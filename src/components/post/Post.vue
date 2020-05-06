@@ -47,8 +47,8 @@
     <!-- vote and comment button -->
     <div class="vblog_post_operation_button" v-if="this.$store.getters.logged">
       <el-row>
-        <el-button plain round size="mini" @click="saveVote()">赞</el-button>
-        <el-button plain round size="mini" @click="toggleComment()">评论</el-button>
+        <el-link type="primary" :underline=false style="font-size: 13px" v-on:click="saveVote()">赞</el-link>
+        <el-link type="primary" :underline=false style="font-size: 13px" v-on:click="toggleComment()">评论</el-link>
       </el-row>
     </div>
 
@@ -67,14 +67,11 @@
     </div>
 
     <!-- comment form -->
-      <el-form class="vblog_comment_form" v-show="showComment === true" :inline="true" :model="comment">
-        <el-form-item>
-          <el-input v-model="comment.content" size="mini"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button plain round size="mini" @click="saveComment">评论</el-button>
-        </el-form-item>
-      </el-form>
+    <div class="vblog_comment_form" v-show="showComment === true">
+      <el-input v-model="comment.content" size="mini"
+                placeholder="请输入内容"
+                @keyup.enter.native="saveComment()"></el-input>
+    </div>
 
     <!-- comments -->
     <div class="vblog_comment" v-if="post.comments.length !== 0">
@@ -126,6 +123,12 @@
           disvote: this.post.voteByMe
         },
 
+        voter: {
+          id: this.$store.state.currentUser.id,
+          avatar: this.$store.state.currentUser.avatar,
+          nickname: this.$store.state.currentUser.nickname,
+        },
+
         comment: {
           postId: this.post.id,
           content: '',
@@ -153,9 +156,8 @@
       deletePost() {
         axios.delete(`/post/${this.post.id}`).then(res => {
           if (res.status === 200 && res.data.code === '1') {
-            setTimeout(() => {
-              this.$emit("loadPosts")
-            }, 1000)
+            this.$store.state.posts = this.$store.state.posts.filter(o => o.id !== this.post.id)
+            this.$store.commit('changePosts', this.$store.state.posts)
           } else {
             this.$message({
               type: "warning",
@@ -171,20 +173,21 @@
         axios.post('/post/vote/vote', this.vote).then(res => {
           if (res.status === 200 && res.data.code === '1') {
             this.post.voteByMe = !this.post.voteByMe
-              this.vote.disvote = this.post.voteByMe
-              setTimeout(() => {
-                axios.get(`/open/post/voters/${this.post.id}`).then(response => {
-                if (response.status === 200) {
-                  this.$set(this.post, "voters", response.data.data)
-                }
-              })}, 1000)
+            if (this.vote.disvote === true) {
+              this.post.voters = this.post.voters.filter(o => o.id !== this.voter.id)
+              this.$store.state.posts.filter(o => o.id === this.post.id).map(o => o.voters = this.post.voters)
             } else {
-              this.$message({
-                type: "warning",
-                message: "点赞失败!",
-                showClose: false
-              });
+              this.$store.state.posts.filter(o => o.id === this.post.id).map(o => o.voters.unshift(this.voter))
             }
+            this.$store.commit('changePosts', this.$store.state.posts)
+            this.vote.disvote = this.post.voteByMe
+          } else {
+            this.$message({
+              type: "warning",
+              message: "点赞失败!",
+              showClose: false
+            });
+          }
         })
       },
 
@@ -271,12 +274,13 @@
   }
 
   .vblog_post_images {
-    padding: 0 10px 5px 50px;
+    padding: 3px 5px 5px 50px;
   }
 
   .vblog_post_images_item {
     width: 33%;
-    height: 180px;
+    height: 160px;
+    margin-top: -3px;
   }
 
   .vblog-post-topics {
@@ -302,7 +306,7 @@
   }
 
   .vblog_comment_form {
-    margin: 0 0 0 50px;
-    width: 90%;
+    margin: 5px 10px 0 50px;
+    padding: 0 0 5px 0;
   }
 </style>

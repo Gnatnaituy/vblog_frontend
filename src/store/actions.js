@@ -12,7 +12,6 @@ const actions = {
     })
     context.commit('changeNoNewPosts', false)
     context.commit('clearPosts')
-    console.log(context.state.searchVo)
   },
 
   post (context, keyword) {

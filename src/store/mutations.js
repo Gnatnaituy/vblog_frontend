@@ -39,6 +39,9 @@ const mutations = {
   pushPost (state, newPost) {
     state.posts.unshift(newPost)
   },
+  changePosts (state, posts) {
+    state.posts = posts
+  },
   changeLoading (state, loading) {
     state.loading = loading
   },

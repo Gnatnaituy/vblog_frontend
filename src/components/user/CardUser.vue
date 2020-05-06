@@ -137,12 +137,10 @@
         <el-card v-show="addFriendFormVisible" shadow="never">
           <el-form :model="friendAddVo" size="mini">
             <el-form-item>
-              备注
-              <el-input v-model="friendAddVo.senderRemark" placeholder="可选" class="friend-remark"></el-input>
+              <el-input v-model="friendAddVo.senderRemark" placeholder="备注 选填" class="friend-remark"></el-input>
             </el-form-item>
             <el-form-item>
-              权限
-              <el-select v-model="friendAddVo.senderVisibility" placeholder="默认双方可见" class="friend-visibility">
+              <el-select v-model="friendAddVo.senderVisibility" placeholder="好友权限 默认双方可见" class="friend-visibility">
                 <el-option label="双方可见" value="1"></el-option>
                 <el-option label="不看他的动态" value="2"></el-option>
                 <el-option label="不让他看我的动态" value="3"></el-option>
@@ -164,12 +162,10 @@
         <el-card v-show="modifyRemarkAndVisibilityFormVisible" shadow="never">
           <el-form :model="changeRemarkAndVisibilityVo" size="mini">
             <el-form-item>
-              备注
-              <el-input v-model="changeRemarkAndVisibilityVo.remark" placeholder="可选" class="friend-remark"></el-input>
+              <el-input v-model="changeRemarkAndVisibilityVo.remark" placeholder="备注 选填" class="friend-remark"></el-input>
             </el-form-item>
             <el-form-item>
-              权限
-              <el-select v-model="changeRemarkAndVisibilityVo.visibility" placeholder="默认双方可见" class="friend-visibility">
+              <el-select v-model="changeRemarkAndVisibilityVo.visibility" placeholder="好友权限 默认双方可见" class="friend-visibility">
                 <el-option label="双方可见" value="1"></el-option>
                 <el-option label="不看他的动态" value="2"></el-option>
                 <el-option label="不让他看我的动态" value="3"></el-option>
@@ -237,7 +233,7 @@
         friendAddVo: {
           senderId: this.$store.state.token.userId,
           senderRemark: null,
-          senderVisibility: "1",
+          senderVisibility: null,
           receiverId: this.$store.state.currentUser.id
         },
         changeRemarkAndVisibilityVo: {
@@ -410,7 +406,7 @@
     float: right;
   }
   .friend-visibility {
-    width: 80%;
+    width: 100%;
     float: right
   }
 

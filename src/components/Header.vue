@@ -219,4 +219,35 @@
     font-size: 14px;
     word-break: break-all;
   }
+
+  .el-upload--picture-card {
+    background-color: #F2F6FC;
+    border: none;
+    width: 180px;
+    height: 180px;
+    line-height: 180px;
+    vertical-align: top;
+  }
+  .el-upload-list--picture-card .el-upload-list__item {
+    overflow: hidden;
+    background-color: #fff;
+    border: 0;
+    border-radius: 0;
+    box-sizing: unset;
+    width: 180px;
+    height: 180px;
+    margin: -2px 0 -1px 0;
+    display: inline-block;
+  }
+  .el-upload-list__item {
+    -webkit-transition: all .5s cubic-bezier(.55,0,.1,1);
+    transition: all .5s cubic-bezier(.55,0,.1,1);
+    font-size: 14px;
+    color: #606266;
+    line-height: 1.8;
+    margin-top: 0;
+    position: relative;
+    border: none;
+    width: 100%;
+  }
 </style>
