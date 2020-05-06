@@ -77,9 +77,9 @@
           <b v-show="currentUser.id !== token.userId">他的词条</b>
           <div>
             <el-link class="user-information-word" type="primary" :underline=false
-                     v-for="word in currentUser.words" :key="word"
+                     v-for="(word, index) in currentUser.words" :key="word"
                      @click="postPage(word)">
-              {{ word }}
+              {{ word }}<i v-if="index !== currentUser.words.length - 1">、</i>
             </el-link>
           </div>
         </div>

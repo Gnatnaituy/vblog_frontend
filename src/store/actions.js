@@ -7,6 +7,21 @@ const actions = {
       keyword: null,
       topic: null,
       poster: null,
+      onlyFriends: null,
+      start: 0,
+      size: 20
+    })
+    context.commit('changeNoNewPosts', false)
+    context.commit('clearPosts')
+  },
+
+  friend (context, onlyFriends) {
+    context.commit('changeSearchVo', {
+      postId: null,
+      keyword: null,
+      topic: null,
+      poster: null,
+      onlyFriends: onlyFriends,
       start: 0,
       size: 20
     })
@@ -20,6 +35,7 @@ const actions = {
       keyword: keyword,
       topic: null,
       poster: null,
+      onlyFriends: null,
       start: 0,
       size: 20
     })
@@ -33,6 +49,7 @@ const actions = {
       keyword: null,
       topic: topicId,
       poster: null,
+      onlyFriends: null,
       start: 0,
       size: 20
     })
@@ -53,6 +70,7 @@ const actions = {
       keyword: null,
       topic: null,
       poster: userId,
+      onlyFriends: null,
       start: 0,
       size: 20
     })

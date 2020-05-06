@@ -12,7 +12,7 @@
           </el-col>
 
           <el-col :span="10" style="padding: 0 10px 10px 10px">
-            <div class="text item vblog-search-result"> <b>搜索结果</b> </div>
+            <div class="text item vblog-search-result"><b>搜索结果</b></div>
             <scroll-page></scroll-page>
           </el-col>
 

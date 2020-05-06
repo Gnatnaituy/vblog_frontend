@@ -55,10 +55,10 @@
     <!-- votes -->
     <div class="vblog_vote" v-if="post.voters.length !== 0">
       <el-link type="primary" :underline=false style="font-size: 13px"
-               v-for="voter in post.voters"
+               v-for="(voter, index) in post.voters"
                v-bind:key="voter.id"
                v-on:click="userPage(voter.id)">
-        {{ voter.nickname + '、' }}
+        {{ voter.nickname }}<i v-if="index !== post.voters.length - 1">、</i>
       </el-link>
       <el-link type="info" :underline=false style="font-weight: 400; font-size: 13px">觉得很赞</el-link>
     </div>

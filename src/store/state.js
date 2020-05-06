@@ -47,6 +47,7 @@ const state = {
     keyword: null,
     topic: null,
     poster: null,
+    onlyFriends: null,
     start: 0,
     size: 20
   },

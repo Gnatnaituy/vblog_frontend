@@ -16,6 +16,15 @@
           <!-- post write & content board -->
           <el-col :span="10" style="padding: 0 10px 10px 10px">
             <post-write v-if="this.logged()"></post-write>
+            <div class="text item vblog-post-scope">
+              <el-link type="primary" :underline=false @click="mainPage()">
+                全部动态
+              </el-link>
+              |
+              <el-link type="primary" :underline=false @click="friendPage()">
+                好友动态
+              </el-link>
+            </div>
             <scroll-page></scroll-page>
           </el-col>
 
@@ -38,7 +47,7 @@ import CardHotWord from '../components/post/CardHotWord'
 import CardHotTopic from '../components/post/CardHotTopic'
 import CardHotUser from '../components/user/CardHotUser'
 import CardRecommendUser from "../components/user/CardRecommendUser";
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'PostHome',
@@ -54,7 +63,22 @@ export default {
   },
 
   methods: {
-    ...mapGetters(['logged'])
+    ...mapGetters(['logged']),
+    ...mapActions(['friend', 'main']),
+    friendPage() {
+      this.friend(true)
+      console.log(this.$store.state.searchVo)
+      if (this.$route.path !== '/') {
+        this.$router.push({path: '/'})
+      }
+    },
+    mainPage() {
+      this.main(null)
+      console.log(this.$store.state.searchVo)
+      if (this.$route.path !== '/') {
+        this.$router.push({path: '/'})
+      }
+    },
   }
 }
 </script>
@@ -67,5 +91,10 @@ export default {
   .el-card {
     border-radius: 4px;
     border: none;
+  }
+
+  .vblog-post-scope {
+    padding: 0 5px 5px 5px;
+    color: rgb(70, 70, 70);
   }
 </style>
