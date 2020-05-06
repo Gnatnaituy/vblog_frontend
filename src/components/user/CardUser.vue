@@ -231,23 +231,12 @@
         editUserInfoMode: false,
         modifyUserInfoDialogVisible: false,
         friendAddVo: {
-          senderId: this.$store.state.token.userId,
           senderRemark: null,
-          senderVisibility: null,
-          receiverId: this.$store.state.currentUser.id
+          senderVisibility: null
         },
         changeRemarkAndVisibilityVo: {
-          userId: this.$store.state.token.userId,
-          friendId: this.$store.state.currentUser.id,
           remark: null,
           visibility: null
-        },
-        deleteFriendVo: {
-          userId: this.$store.state.token.userId,
-          friendId: this.$store.state.currentUser.id
-        },
-        blockVo: {
-          blockUserId: this.$store.state.currentUser.id
         }
       }
     },
@@ -274,8 +263,15 @@
       },
 
       sendFriendRequest() {
+        console.log(this.$store.state.token)
+        console.log(this.$store.state.currentUser)
         this.addFriendFormVisible = false
-        axios.post('/user/friend/request/send', this.friendAddVo).then(res => {
+        axios.post('/user/friend/request/send', {
+          senderId: this.$store.state.token.userId,
+          senderRemark: this.friendAddVo.senderRemark,
+          senderVisibility: this.friendAddVo.senderVisibility,
+          receiverId: this.$store.state.currentUser.id
+        }).then(res => {
           if (res.status === 200 && res.data.code === '1') {
             this.$store.state.currentUser.friendStatus = 'REQUEST_SEND'
             this.$store.commit('changeCurrentUser', this.$store.state.currentUser)
@@ -289,10 +285,18 @@
       changeRemarkAndVisibility() {
         this.modifyRemarkAndVisibilityFormVisible = false
         if (this.changeRemarkAndVisibilityVo.remark !== null) {
-          axios.post('/user/friend/remark', this.changeRemarkAndVisibilityVo)
+          axios.post('/user/friend/remark', {
+            userId: this.$store.state.token.userId,
+            friendId: this.$store.state.currentUser.id,
+            remark: this.changeRemarkAndVisibilityVo.remark
+          })
         }
         if (this.changeRemarkAndVisibilityVo.visibility !== null) {
-          axios.post('/user/friend/visibility', this.changeRemarkAndVisibilityVo)
+          axios.post('/user/friend/visibility', {
+            userId: this.$store.state.token.userId,
+            friendId: this.$store.state.currentUser.id,
+            visibility: this.changeRemarkAndVisibilityVo.visibility
+          })
         }
       },
       toggleModifyRemarkAndVisibilityForm() {
@@ -300,7 +304,10 @@
       },
 
       deleteFriend() {
-        axios.post('/user/friend/delete', this.deleteFriendVo).then(res => {
+        axios.post('/user/friend/delete', {
+          userId: this.$store.state.token.userId,
+          friendId: this.$store.state.currentUser.id
+        }).then(res => {
           if (res.status === 200 && res.data.code === '1') {
             this.$store.state.currentUser.friendStatus = 'NOT_FRIEND'
             this.$store.commit('changeCurrentUser', this.$store.state.currentUser)
@@ -309,7 +316,9 @@
       },
 
       blockUser() {
-        axios.post('/user/block/block', this.blockVo).then(res => {
+        axios.post('/user/block/block', {
+          blockUserId: this.$store.state.currentUser.id
+        }).then(res => {
           if (res.status === 200 && res.data.code === '1') {
             this.$store.state.currentUser.blocked = true
             this.$store.commit('changeCurrentUser', this.$store.state.currentUser)
@@ -317,7 +326,9 @@
         })
       },
       unblockUser() {
-        axios.post('/user/block/unblock', this.blockVo).then(res => {
+        axios.post('/user/block/unblock', {
+          blockUserId: this.$store.state.currentUser.id
+        }).then(res => {
           if (res.status === 200 && res.data.code === '1') {
             this.$store.state.currentUser.blocked = false
             this.$store.commit('changeCurrentUser', this.$store.state.currentUser)
@@ -374,6 +385,7 @@
   }
   .user-information-header-content {
     margin: -30px 0 10px 40px;
+    font-weight: 500;
   }
   .user-information-header-item {
     padding-top: 0;

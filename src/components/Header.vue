@@ -8,7 +8,7 @@
 
       <!-- search pane -->
       <el-col :span="10">
-        <el-input v-model="searchVo.keyword" style="margin-top: 10px;">
+        <el-input v-model="searchVo.keyword" style="margin-top: 10px;" @keyup.enter.native="postPage(searchVo.keyword)">
           <i slot="suffix" class="el-input__icon el-icon-search" @click="postPage(searchVo.keyword)"></i>
         </el-input>
       </el-col>

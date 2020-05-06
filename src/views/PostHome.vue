@@ -22,6 +22,7 @@
           <!-- current user info & user recommends -->
           <el-col :span="5">
             <card-hot-user style="position: relative"></card-hot-user>
+            <card-recommend-user v-if="this.logged()"></card-recommend-user>
           </el-col>
         </el-row>
       </el-container>
@@ -36,6 +37,7 @@ import PostWrite from '../components/post/PostWrite'
 import CardHotWord from '../components/post/CardHotWord'
 import CardHotTopic from '../components/post/CardHotTopic'
 import CardHotUser from '../components/user/CardHotUser'
+import CardRecommendUser from "../components/user/CardRecommendUser";
 import { mapGetters } from 'vuex'
 
 export default {
@@ -47,7 +49,8 @@ export default {
     'post-write': PostWrite,
     'card-hot-word': CardHotWord,
     'card-hot-topic': CardHotTopic,
-    'card-hot-user': CardHotUser
+    'card-hot-user': CardHotUser,
+    'card-recommend-user': CardRecommendUser
   },
 
   methods: {

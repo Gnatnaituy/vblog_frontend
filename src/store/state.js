@@ -17,7 +17,6 @@ const state = {
     tokenType: null
   },
   hotUsers: [],
-  recommendUsers: [],
   currentUser: {
     id: null,
     username: null,
