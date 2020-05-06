@@ -58,7 +58,7 @@
                v-for="voter in post.voters"
                v-bind:key="voter.id"
                v-on:click="userPage(voter.id)">
-        {{ voter.nickname + '&nbsp' }}
+        {{ voter.nickname + '、' }}
       </el-link>
       <el-link type="info" :underline=false style="font-weight: 400; font-size: 13px">觉得很赞</el-link>
     </div>
@@ -124,9 +124,9 @@
         },
 
         voter: {
-          id: this.$store.state.currentUser.id,
-          avatar: this.$store.state.currentUser.avatar,
-          nickname: this.$store.state.currentUser.nickname,
+          id: this.$store.state.token.userId,
+          avatar: this.$store.state.token.avatar,
+          nickname: this.$store.state.token.nickname,
         },
 
         comment: {

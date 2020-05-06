@@ -60,8 +60,8 @@
 
         <el-divider></el-divider>
         <div class="text item user-information-item">
-          <b v-show="currentUser.id === token.userId">我的话题</b>
-          <b v-show="currentUser.id !== token.userId">他的话题</b>
+          <b v-show="currentUser.id === token.userId">我活跃的的话题</b>
+          <b v-show="currentUser.id !== token.userId">他活跃的的话题</b>
           <div>
             <el-link class="user-information-topic" type="primary" :underline=false
                      v-for="topic in currentUser.topics" :key="topic.id"

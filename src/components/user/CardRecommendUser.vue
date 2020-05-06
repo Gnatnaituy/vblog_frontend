@@ -15,15 +15,6 @@
 
       <div class="user-information-content">
         <div class="text item user-information-item">
-          <b>邮箱</b>:
-          <p class="user-information-value" v-show="recommendUser.email !== null" style="margin-top: 2px" >
-            {{ recommendUser.email }}
-          </p>
-          <p class="user-information-value" v-show="recommendUser.email === null">
-            未填写
-          </p>
-        </div>
-        <div class="text item user-information-item">
           <b>性别</b>:
           <p class="user-information-value" v-show="recommendUser.gender !== null">
             {{ recommendUser.gender }}
@@ -60,7 +51,7 @@
 
       <el-divider></el-divider>
       <div class="text item user-information-item">
-        <b>他的话题</b>
+        <b>他活跃的话题</b>
         <div>
           <el-link class="user-information-topic" type="primary" :underline=false
                    v-for="topic in recommendUser.topics" :key="topic.id"

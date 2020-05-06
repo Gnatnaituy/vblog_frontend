@@ -45,7 +45,7 @@
           </div>
         </div>
 
-        <el-divider v-if="this.logged()"></el-divider>
+        <el-divider v-if="this.logged() && currentTopic.createUser.id === token.userId"></el-divider>
         <div v-if="this.logged()">
           <el-button size="mini" plain class="topic-operation-button"
                      v-if="currentTopic.createUser.id === token.userId"
