@@ -13,7 +13,7 @@
       <i slot="default" class="el-icon-plus"></i>
       <div slot="file" slot-scope="{file}">
         <div class="img-wrapper">
-          <img class="el-upload-list__item-thumbnail" :fit="fit" :src="file.url" alt="">
+          <img class="el-upload-list__item-thumbnail" object-fit="fit" :src="file.url" alt="">
         </div>
       </div>
     </el-upload>

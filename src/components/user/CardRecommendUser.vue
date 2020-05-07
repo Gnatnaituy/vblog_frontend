@@ -92,25 +92,7 @@
 
     data() {
       return {
-        recommendUser: {
-          id: null,
-          username: null,
-          nickname: null,
-          email: null,
-          phone: null,
-          avatar: null,
-          background: null,
-          bio: null,
-          age: null,
-          gender: null,
-          country: null,
-          province: null,
-          city: null,
-          registerTime: null,
-          blocks: [],
-          friendStatus: null,
-          blocked: null
-        }
+        recommendUser: null
       }
     },
 

@@ -16,7 +16,7 @@
           <!-- post write & content board -->
           <el-col :span="10" style="padding: 0 10px 10px 10px">
             <post-write v-if="this.logged()"></post-write>
-            <div class="text item vblog-post-scope">
+            <div v-if="this.logged()" class="text item vblog-post-scope">
               <el-link type="primary" :underline=false @click="mainPage()">
                 全部动态
               </el-link>
