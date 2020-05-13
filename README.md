@@ -1,5 +1,5 @@
 VLBOG 基于Spring Cloud开发, 前端采用Vue框架, 效果图如下:
 
-![首页](https://img04.sogoucdn.com/app/a/100520146/0fbe4aeddd10504a625ba41c55cdf604)
+![WechatIMG67.jpeg](http://yanxuan.nosdn.127.net/95fcbbab701713b81377680c17521748.jpeg)
 
-![个人主页](https://img03.sogoucdn.com/app/a/100520146/92913b27ccca2a8b527fbb8e11728db3)
+![WechatIMG66.jpeg](http://yanxuan.nosdn.127.net/849b1dcf8143ab2fbfd82360b40aa300.jpeg)
